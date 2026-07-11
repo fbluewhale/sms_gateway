@@ -1,0 +1,15 @@
+.DS_Store
+.idea/
+.vscode/
+
+# Go build artifacts
+/bin/
+*.exe
+*.test
+*.out
+coverage.out
+*.coverprofile
+
+# Local environment files
+.env
+.env.*
