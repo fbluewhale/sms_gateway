@@ -1,0 +1,4133 @@
+{
+  "nodes": [
+    {
+      "id": "internal_config_config_go",
+      "label": "config.go",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "config_config",
+      "label": "Config",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L10"
+    },
+    {
+      "id": "config_serverconfig",
+      "label": "ServerConfig",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L16"
+    },
+    {
+      "id": "config_databaseconfig",
+      "label": "DatabaseConfig",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L24"
+    },
+    {
+      "id": "config_databaseconfig_dsn",
+      "label": ".DSN()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L33"
+    },
+    {
+      "id": "config_config_load",
+      "label": "Load()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L40"
+    },
+    {
+      "id": "config_config_getenv",
+      "label": "getEnv()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L66"
+    },
+    {
+      "id": "internal_domain_sms_entity_go",
+      "label": "entity.go",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "sms_linetype",
+      "label": "LineType",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L3"
+    },
+    {
+      "id": "sms_linetype_isvalid",
+      "label": ".IsValid()",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L10"
+    },
+    {
+      "id": "sms_linetype_string",
+      "label": ".String()",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L14"
+    },
+    {
+      "id": "sms_destination",
+      "label": "Destination",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L18"
+    },
+    {
+      "id": "sms_destination_string",
+      "label": ".String()",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L20"
+    },
+    {
+      "id": "sms_destination_isvalid",
+      "label": ".IsValid()",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L24"
+    },
+    {
+      "id": "internal_domain_sms_repository_go",
+      "label": "repository.go",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/repository.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "sms_smscost",
+      "label": "SMSCost",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/repository.go",
+      "source_location": "L5"
+    },
+    {
+      "id": "sms_smscostrepository",
+      "label": "SMSCostRepository",
+      "file_type": "code",
+      "source_file": "internal/domain/sms/repository.go",
+      "source_location": "L11"
+    },
+    {
+      "id": "internal_domain_channel_entity_go",
+      "label": "entity.go",
+      "file_type": "code",
+      "source_file": "internal/domain/channel/entity.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "channel_channel",
+      "label": "Channel",
+      "file_type": "code",
+      "source_file": "internal/domain/channel/entity.go",
+      "source_location": "L5"
+    },
+    {
+      "id": "internal_domain_channel_repository_go",
+      "label": "repository.go",
+      "file_type": "code",
+      "source_file": "internal/domain/channel/repository.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "channel_channelrepository",
+      "label": "ChannelRepository",
+      "file_type": "code",
+      "source_file": "internal/domain/channel/repository.go",
+      "source_location": "L5"
+    },
+    {
+      "id": "internal_domain_wallet_entity_test_go",
+      "label": "entity_test.go",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "wallet_entity_test_testnewmoney",
+      "label": "TestNewMoney()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L9"
+    },
+    {
+      "id": "wallet_entity_test_testmoneysubtract",
+      "label": "TestMoneySubtract()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L33"
+    },
+    {
+      "id": "internal_domain_wallet_entity_go",
+      "label": "entity.go",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "wallet_money",
+      "label": "Money",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L15"
+    },
+    {
+      "id": "wallet_entity_newmoney",
+      "label": "NewMoney()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L21"
+    },
+    {
+      "id": "wallet_entity_mustmoney",
+      "label": "MustMoney()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L28"
+    },
+    {
+      "id": "wallet_entity_moneyfromunits",
+      "label": "MoneyFromUnits()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L36"
+    },
+    {
+      "id": "wallet_money_units",
+      "label": ".Units()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L43"
+    },
+    {
+      "id": "wallet_money_float64",
+      "label": ".Float64()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L44"
+    },
+    {
+      "id": "wallet_money_string",
+      "label": ".String()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L45"
+    },
+    {
+      "id": "wallet_money_ispositive",
+      "label": ".IsPositive()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L46"
+    },
+    {
+      "id": "wallet_money_equals",
+      "label": ".Equals()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L47"
+    },
+    {
+      "id": "wallet_money_greaterthan",
+      "label": ".GreaterThan()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L48"
+    },
+    {
+      "id": "wallet_money_subtract",
+      "label": ".Subtract()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L50"
+    },
+    {
+      "id": "wallet_money_add",
+      "label": ".Add()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L57"
+    },
+    {
+      "id": "wallet_transactiontype",
+      "label": "TransactionType",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L59"
+    },
+    {
+      "id": "wallet_wallet",
+      "label": "Wallet",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L66"
+    },
+    {
+      "id": "wallet_wallettransaction",
+      "label": "WalletTransaction",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L73"
+    },
+    {
+      "id": "wallet_wallet_canafford",
+      "label": ".CanAfford()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L83"
+    },
+    {
+      "id": "wallet_wallet_deduct",
+      "label": ".Deduct()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L87"
+    },
+    {
+      "id": "wallet_wallet_credit",
+      "label": ".Credit()",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L91"
+    },
+    {
+      "id": "internal_domain_wallet_repository_go",
+      "label": "repository.go",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/repository.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "wallet_walletrepository",
+      "label": "WalletRepository",
+      "file_type": "code",
+      "source_file": "internal/domain/wallet/repository.go",
+      "source_location": "L5"
+    },
+    {
+      "id": "internal_infrastructure_sms_mock_sender_go",
+      "label": "mock_sender.go",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "sms_mocksender",
+      "label": "MockSender",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L10"
+    },
+    {
+      "id": "sms_mock_sender_newmocksender",
+      "label": "NewMockSender()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L12"
+    },
+    {
+      "id": "sms_mocksender_send",
+      "label": ".Send()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L14"
+    },
+    {
+      "id": "internal_infrastructure_persistence_channel_repository_go",
+      "label": "channel_repository.go",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "persistence_postgreschannelrepository",
+      "label": "PostgresChannelRepository",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L12"
+    },
+    {
+      "id": "persistence_channel_repository_newpostgreschannelrepository",
+      "label": "NewPostgresChannelRepository()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L16"
+    },
+    {
+      "id": "persistence_postgreschannelrepository_getbyname",
+      "label": ".GetByName()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L20"
+    },
+    {
+      "id": "persistence_postgreschannelrepository_create",
+      "label": ".Create()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L28"
+    },
+    {
+      "id": "persistence_postgreschannelrepository_list",
+      "label": ".List()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L44"
+    },
+    {
+      "id": "internal_infrastructure_persistence_wallet_repository_go",
+      "label": "wallet_repository.go",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "persistence_postgreswalletrepository",
+      "label": "PostgresWalletRepository",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L13"
+    },
+    {
+      "id": "persistence_wallet_repository_newpostgreswalletrepository",
+      "label": "NewPostgresWalletRepository()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L17"
+    },
+    {
+      "id": "persistence_postgreswalletrepository_getbyid",
+      "label": ".GetByID()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L21"
+    },
+    {
+      "id": "persistence_postgreswalletrepository_create",
+      "label": ".Create()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L29"
+    },
+    {
+      "id": "persistence_postgreswalletrepository_creditandrecord",
+      "label": ".CreditAndRecord()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L42"
+    },
+    {
+      "id": "persistence_postgreswalletrepository_deductandrecord",
+      "label": ".DeductAndRecord()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L46"
+    },
+    {
+      "id": "persistence_postgreswalletrepository_mutateandrecord",
+      "label": ".mutateAndRecord()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L50"
+    },
+    {
+      "id": "persistence_postgreswalletrepository_gettransactionsbywalletid",
+      "label": ".GetTransactionsByWalletID()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L95"
+    },
+    {
+      "id": "internal_infrastructure_persistence_sms_cost_repository_go",
+      "label": "sms_cost_repository.go",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "persistence_postgressmscostrepository",
+      "label": "PostgresSMSCostRepository",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L12"
+    },
+    {
+      "id": "persistence_sms_cost_repository_newpostgressmscostrepository",
+      "label": "NewPostgresSMSCostRepository()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L16"
+    },
+    {
+      "id": "persistence_postgressmscostrepository_getbylinetype",
+      "label": ".GetByLineType()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L20"
+    },
+    {
+      "id": "internal_infrastructure_persistence_base_model_go",
+      "label": "base_model.go",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "persistence_basemodel",
+      "label": "BaseModel",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L11"
+    },
+    {
+      "id": "persistence_walletmodel",
+      "label": "WalletModel",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L17"
+    },
+    {
+      "id": "persistence_walletmodel_tablename",
+      "label": ".TableName()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L22"
+    },
+    {
+      "id": "persistence_wallettransactionmodel",
+      "label": "WalletTransactionModel",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L26"
+    },
+    {
+      "id": "persistence_wallettransactionmodel_tablename",
+      "label": ".TableName()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L36"
+    },
+    {
+      "id": "persistence_channelmodel",
+      "label": "ChannelModel",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L40"
+    },
+    {
+      "id": "persistence_channelmodel_tablename",
+      "label": ".TableName()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L47"
+    },
+    {
+      "id": "persistence_smscostmodel",
+      "label": "SMSCostModel",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L51"
+    },
+    {
+      "id": "persistence_smscostmodel_tablename",
+      "label": ".TableName()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L57"
+    },
+    {
+      "id": "persistence_base_model_towalletmodel",
+      "label": "toWalletModel()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L61"
+    },
+    {
+      "id": "persistence_base_model_towallettransactionmodel",
+      "label": "toWalletTransactionModel()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L70"
+    },
+    {
+      "id": "persistence_base_model_tochannelmodel",
+      "label": "toChannelModel()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L82"
+    },
+    {
+      "id": "persistence_base_model_tosmscostmodel",
+      "label": "toSMSCostModel()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L93"
+    },
+    {
+      "id": "internal_infrastructure_persistence_database_go",
+      "label": "database.go",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "persistence_database_connect",
+      "label": "Connect()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L17"
+    },
+    {
+      "id": "persistence_database_migrate",
+      "label": "Migrate()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L60"
+    },
+    {
+      "id": "internal_infrastructure_persistence_migrations_002_seed_sms_costs_go",
+      "label": "002_seed_sms_costs.go",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "migrations_002_seed_sms_costs_init",
+      "label": "init()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L10"
+    },
+    {
+      "id": "migrations_002_seed_sms_costs_upseedsmscosts",
+      "label": "upSeedSMSCosts()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L14"
+    },
+    {
+      "id": "migrations_002_seed_sms_costs_downseedsmscosts",
+      "label": "downSeedSMSCosts()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L25"
+    },
+    {
+      "id": "internal_infrastructure_persistence_migrations_001_create_tables_go",
+      "label": "001_create_tables.go",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "migrations_001_create_tables_init",
+      "label": "init()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L10"
+    },
+    {
+      "id": "migrations_001_create_tables_upcreatetables",
+      "label": "upCreateTables()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L14"
+    },
+    {
+      "id": "migrations_001_create_tables_downcreatetables",
+      "label": "downCreateTables()",
+      "file_type": "code",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L81"
+    },
+    {
+      "id": "internal_interfaces_http_handler_helpers_go",
+      "label": "helpers.go",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/helpers.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "handler_helpers_parseidparam",
+      "label": "parseIDParam()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/helpers.go",
+      "source_location": "L10"
+    },
+    {
+      "id": "internal_interfaces_http_handler_sms_handler_go",
+      "label": "sms_handler.go",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "handler_smshandler",
+      "label": "SMSHandler",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L15"
+    },
+    {
+      "id": "handler_sms_handler_newsmshandler",
+      "label": "NewSMSHandler()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L20"
+    },
+    {
+      "id": "handler_smshandler_sendsms",
+      "label": ".SendSMS()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L27"
+    },
+    {
+      "id": "handler_smshandler_createwallet",
+      "label": ".CreateWallet()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L47"
+    },
+    {
+      "id": "handler_smshandler_getwallet",
+      "label": ".GetWallet()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L62"
+    },
+    {
+      "id": "handler_smshandler_topupwallet",
+      "label": ".TopUpWallet()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L76"
+    },
+    {
+      "id": "handler_smshandler_createchannel",
+      "label": ".CreateChannel()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L96"
+    },
+    {
+      "id": "handler_smshandler_listchannels",
+      "label": ".ListChannels()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L111"
+    },
+    {
+      "id": "handler_smshandler_getwallettransactions",
+      "label": ".GetWalletTransactions()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L124"
+    },
+    {
+      "id": "handler_sms_handler_writeserviceerror",
+      "label": "writeServiceError()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L143"
+    },
+    {
+      "id": "internal_interfaces_http_dto_dto_go",
+      "label": "dto.go",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/dto/dto.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "dto_errorresponse",
+      "label": "ErrorResponse",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/dto/dto.go",
+      "source_location": "L3"
+    },
+    {
+      "id": "internal_interfaces_http_router_router_test_go",
+      "label": "router_test.go",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/router/router_test.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "router_router_test_testadminroutesrequireapikey",
+      "label": "TestAdminRoutesRequireAPIKey()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/router/router_test.go",
+      "source_location": "L11"
+    },
+    {
+      "id": "internal_interfaces_http_router_router_go",
+      "label": "router.go",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "router_router_setup",
+      "label": "Setup()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L11"
+    },
+    {
+      "id": "router_router_requireapikey",
+      "label": "requireAPIKey()",
+      "file_type": "code",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L34"
+    },
+    {
+      "id": "internal_application_sms_service_go",
+      "label": "service.go",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "sms_sendsmscommand",
+      "label": "SendSMSCommand",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L14"
+    },
+    {
+      "id": "sms_sendsmsresult",
+      "label": "SendSMSResult",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L20"
+    },
+    {
+      "id": "sms_channelfinder",
+      "label": "ChannelFinder",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L26"
+    },
+    {
+      "id": "sms_walletpayable",
+      "label": "WalletPayable",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L30"
+    },
+    {
+      "id": "sms_sender",
+      "label": "Sender",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L34"
+    },
+    {
+      "id": "sms_service",
+      "label": "Service",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L38"
+    },
+    {
+      "id": "sms_service_newservice",
+      "label": "NewService()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L45"
+    },
+    {
+      "id": "sms_service_execute",
+      "label": ".Execute()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L59"
+    },
+    {
+      "id": "sms_service_generatemessageid",
+      "label": "generateMessageID()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L108"
+    },
+    {
+      "id": "internal_application_sms_service_test_go",
+      "label": "service_test.go",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "sms_channelstub",
+      "label": "channelStub",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L13"
+    },
+    {
+      "id": "sms_channelstub_getbyname",
+      "label": ".GetByName()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L18"
+    },
+    {
+      "id": "sms_coststub",
+      "label": "costStub",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L22"
+    },
+    {
+      "id": "sms_coststub_getbylinetype",
+      "label": ".GetByLineType()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L24"
+    },
+    {
+      "id": "sms_walletstub",
+      "label": "walletStub",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L28"
+    },
+    {
+      "id": "sms_walletstub_deductandrecord",
+      "label": ".DeductAndRecord()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L34"
+    },
+    {
+      "id": "sms_senderstub",
+      "label": "senderStub",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L39"
+    },
+    {
+      "id": "sms_senderstub_send",
+      "label": ".Send()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L44"
+    },
+    {
+      "id": "sms_service_test_testexecuterejectsinvalidcommandbeforedependencies",
+      "label": "TestExecuteRejectsInvalidCommandBeforeDependencies()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L49"
+    },
+    {
+      "id": "sms_service_test_testexecutechargesandsends",
+      "label": "TestExecuteChargesAndSends()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L59"
+    },
+    {
+      "id": "sms_service_test_testexecutereturnssenderfailure",
+      "label": "TestExecuteReturnsSenderFailure()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L72"
+    },
+    {
+      "id": "internal_application_sms_dto_go",
+      "label": "dto.go",
+      "file_type": "code",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "sms_sendsmsrequest",
+      "label": "SendSMSRequest",
+      "file_type": "code",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L7"
+    },
+    {
+      "id": "sms_sendsmsresponse",
+      "label": "SendSMSResponse",
+      "file_type": "code",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L13"
+    },
+    {
+      "id": "sms_dto_tocommand",
+      "label": "ToCommand()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L23"
+    },
+    {
+      "id": "sms_dto_toresponse",
+      "label": "ToResponse()",
+      "file_type": "code",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L31"
+    },
+    {
+      "id": "internal_application_admin_service_go",
+      "label": "service.go",
+      "file_type": "code",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "admin_adminservice",
+      "label": "AdminService",
+      "file_type": "code",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L14"
+    },
+    {
+      "id": "admin_service_newadminservice",
+      "label": "NewAdminService()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L19"
+    },
+    {
+      "id": "admin_adminservice_createwallet",
+      "label": ".CreateWallet()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L29"
+    },
+    {
+      "id": "admin_adminservice_getwallet",
+      "label": ".GetWallet()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L43"
+    },
+    {
+      "id": "admin_adminservice_topupwallet",
+      "label": ".TopUpWallet()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L47"
+    },
+    {
+      "id": "admin_adminservice_createchannel",
+      "label": ".CreateChannel()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L55"
+    },
+    {
+      "id": "admin_adminservice_listchannels",
+      "label": ".ListChannels()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L71"
+    },
+    {
+      "id": "admin_adminservice_getwallettransactions",
+      "label": ".GetWalletTransactions()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L75"
+    },
+    {
+      "id": "internal_application_admin_dto_go",
+      "label": "dto.go",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "admin_createwalletrequest",
+      "label": "CreateWalletRequest",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L9"
+    },
+    {
+      "id": "admin_topupwalletrequest",
+      "label": "TopUpWalletRequest",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L13"
+    },
+    {
+      "id": "admin_createchannelrequest",
+      "label": "CreateChannelRequest",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L18"
+    },
+    {
+      "id": "admin_walletresponse",
+      "label": "WalletResponse",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L23"
+    },
+    {
+      "id": "admin_channelresponse",
+      "label": "ChannelResponse",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L30"
+    },
+    {
+      "id": "admin_transactionresponse",
+      "label": "TransactionResponse",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L39"
+    },
+    {
+      "id": "admin_dto_towalletresponse",
+      "label": "ToWalletResponse()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L49"
+    },
+    {
+      "id": "admin_dto_totransactionresponse",
+      "label": "ToTransactionResponse()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L58"
+    },
+    {
+      "id": "admin_dto_tochannelresponse",
+      "label": "ToChannelResponse()",
+      "file_type": "code",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L70"
+    },
+    {
+      "id": "cmd_api_gateway_main_go",
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "api_gateway_main_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L22"
+    },
+    {
+      "id": "api_gateway_main_run",
+      "label": "run()",
+      "file_type": "code",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L29"
+    }
+  ],
+  "edges": [
+    {
+      "source": "internal_config_config_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "go_pkg_os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_serverconfig",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_databaseconfig",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "config_databaseconfig",
+      "target": "config_databaseconfig_dsn",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config_load",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config_getenv",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_load",
+      "target": "config_config_getenv",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_sms_entity_go",
+      "target": "sms_linetype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_linetype",
+      "target": "sms_linetype_isvalid",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_linetype",
+      "target": "sms_linetype_string",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_sms_entity_go",
+      "target": "sms_destination",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_destination",
+      "target": "sms_destination_string",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_destination",
+      "target": "sms_destination_isvalid",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_linetype_string",
+      "target": "sms_destination_string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/entity.go",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_sms_repository_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/repository.go",
+      "source_location": "L3",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_sms_repository_go",
+      "target": "sms_smscost",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/repository.go",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_sms_repository_go",
+      "target": "sms_smscostrepository",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/sms/repository.go",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_channel_entity_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/channel/entity.go",
+      "source_location": "L3",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_channel_entity_go",
+      "target": "channel_channel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/channel/entity.go",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_channel_repository_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/channel/repository.go",
+      "source_location": "L3",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_channel_repository_go",
+      "target": "channel_channelrepository",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/channel/repository.go",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_entity_test_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_wallet_entity_test_go",
+      "target": "go_pkg_math",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_wallet_entity_test_go",
+      "target": "go_pkg_testing",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_wallet_entity_test_go",
+      "target": "wallet_entity_test_testnewmoney",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_entity_test_go",
+      "target": "wallet_entity_test_testmoneysubtract",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "go_pkg_math",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "wallet_money",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "wallet_entity_newmoney",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "wallet_entity_mustmoney",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "wallet_entity_moneyfromunits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_money",
+      "target": "wallet_money_units",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_money",
+      "target": "wallet_money_float64",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_money",
+      "target": "wallet_money_string",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_money",
+      "target": "wallet_money_ispositive",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_money",
+      "target": "wallet_money_equals",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_money",
+      "target": "wallet_money_greaterthan",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_money",
+      "target": "wallet_money_subtract",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_money",
+      "target": "wallet_money_add",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "wallet_transactiontype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "wallet_wallet",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_entity_go",
+      "target": "wallet_wallettransaction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_wallet",
+      "target": "wallet_wallet_canafford",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_wallet",
+      "target": "wallet_wallet_deduct",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_wallet",
+      "target": "wallet_wallet_credit",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_entity_newmoney",
+      "target": "wallet_money_float64",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_entity_mustmoney",
+      "target": "wallet_entity_newmoney",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_money_string",
+      "target": "wallet_money_float64",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_wallet_canafford",
+      "target": "wallet_money_greaterthan",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_wallet_canafford",
+      "target": "wallet_money_equals",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_wallet_deduct",
+      "target": "wallet_money_subtract",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_wallet_credit",
+      "target": "wallet_money_add",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/entity.go",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_domain_wallet_repository_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/repository.go",
+      "source_location": "L3",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_domain_wallet_repository_go",
+      "target": "wallet_walletrepository",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/domain/wallet/repository.go",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_sms_mock_sender_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_sms_mock_sender_go",
+      "target": "go_pkg_log_slog",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_sms_mock_sender_go",
+      "target": "go_pkg_sms_gateway_internal_domain_sms",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_sms_mock_sender_go",
+      "target": "sms_mocksender",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_sms_mock_sender_go",
+      "target": "sms_mock_sender_newmocksender",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_mocksender",
+      "target": "sms_mocksender_send",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/sms/mock_sender.go",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_channel_repository_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_channel_repository_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_channel_repository_go",
+      "target": "go_pkg_gorm_io_gorm",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_channel_repository_go",
+      "target": "go_pkg_sms_gateway_internal_domain_channel",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_channel_repository_go",
+      "target": "persistence_postgreschannelrepository",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_channel_repository_go",
+      "target": "persistence_channel_repository_newpostgreschannelrepository",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreschannelrepository",
+      "target": "persistence_postgreschannelrepository_getbyname",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreschannelrepository",
+      "target": "persistence_postgreschannelrepository_create",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreschannelrepository",
+      "target": "persistence_postgreschannelrepository_list",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_wallet_repository_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_wallet_repository_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_wallet_repository_go",
+      "target": "go_pkg_gorm_io_gorm",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_wallet_repository_go",
+      "target": "go_pkg_gorm_io_gorm_clause",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_wallet_repository_go",
+      "target": "go_pkg_sms_gateway_internal_domain_wallet",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_wallet_repository_go",
+      "target": "persistence_postgreswalletrepository",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_wallet_repository_go",
+      "target": "persistence_wallet_repository_newpostgreswalletrepository",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository",
+      "target": "persistence_postgreswalletrepository_getbyid",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository",
+      "target": "persistence_postgreswalletrepository_create",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository",
+      "target": "persistence_postgreswalletrepository_creditandrecord",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository",
+      "target": "persistence_postgreswalletrepository_deductandrecord",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository",
+      "target": "persistence_postgreswalletrepository_mutateandrecord",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository",
+      "target": "persistence_postgreswalletrepository_gettransactionsbywalletid",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository_creditandrecord",
+      "target": "persistence_postgreswalletrepository_mutateandrecord",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository_deductandrecord",
+      "target": "persistence_postgreswalletrepository_mutateandrecord",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository_mutateandrecord",
+      "target": "persistence_postgreswalletrepository_create",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_sms_cost_repository_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_sms_cost_repository_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_sms_cost_repository_go",
+      "target": "go_pkg_gorm_io_gorm",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_sms_cost_repository_go",
+      "target": "go_pkg_sms_gateway_internal_domain_sms",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_sms_cost_repository_go",
+      "target": "persistence_postgressmscostrepository",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_sms_cost_repository_go",
+      "target": "persistence_sms_cost_repository_newpostgressmscostrepository",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgressmscostrepository",
+      "target": "persistence_postgressmscostrepository_getbylinetype",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "go_pkg_sms_gateway_internal_domain_channel",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "go_pkg_sms_gateway_internal_domain_sms",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "go_pkg_sms_gateway_internal_domain_wallet",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "persistence_basemodel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "persistence_walletmodel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_walletmodel",
+      "target": "persistence_walletmodel_tablename",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "persistence_wallettransactionmodel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_wallettransactionmodel",
+      "target": "persistence_wallettransactionmodel_tablename",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "persistence_channelmodel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_channelmodel",
+      "target": "persistence_channelmodel_tablename",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "persistence_smscostmodel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_smscostmodel",
+      "target": "persistence_smscostmodel_tablename",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "persistence_base_model_towalletmodel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "persistence_base_model_towallettransactionmodel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "persistence_base_model_tochannelmodel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_base_model_go",
+      "target": "persistence_base_model_tosmscostmodel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "go_pkg_github_com_pressly_goose_v3",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "go_pkg_gorm_io_driver_postgres",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "go_pkg_gorm_io_gorm",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "go_pkg_gorm_io_gorm_logger",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "go_pkg_sms_gateway_internal_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L13",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "go_pkg_sms_gateway_internal_infrastructure_persistence_migrations",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L14",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "persistence_database_connect",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_database_go",
+      "target": "persistence_database_migrate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/database.go",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_002_seed_sms_costs_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_002_seed_sms_costs_go",
+      "target": "go_pkg_database_sql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_002_seed_sms_costs_go",
+      "target": "go_pkg_github_com_pressly_goose_v3",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_002_seed_sms_costs_go",
+      "target": "migrations_002_seed_sms_costs_init",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_002_seed_sms_costs_go",
+      "target": "migrations_002_seed_sms_costs_upseedsmscosts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_002_seed_sms_costs_go",
+      "target": "migrations_002_seed_sms_costs_downseedsmscosts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/002_seed_sms_costs.go",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_001_create_tables_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_001_create_tables_go",
+      "target": "go_pkg_database_sql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_001_create_tables_go",
+      "target": "go_pkg_github_com_pressly_goose_v3",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_001_create_tables_go",
+      "target": "migrations_001_create_tables_init",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_001_create_tables_go",
+      "target": "migrations_001_create_tables_upcreatetables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_infrastructure_persistence_migrations_001_create_tables_go",
+      "target": "migrations_001_create_tables_downcreatetables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/infrastructure/persistence/migrations/001_create_tables.go",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_interfaces_http_handler_helpers_go",
+      "target": "go_pkg_net_http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/helpers.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_helpers_go",
+      "target": "go_pkg_strconv",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/helpers.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_helpers_go",
+      "target": "go_pkg_github_com_gin_gonic_gin",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/helpers.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_helpers_go",
+      "target": "handler_helpers_parseidparam",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/helpers.go",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "go_pkg_net_http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "go_pkg_github_com_gin_gonic_gin",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "go_pkg_sms_gateway_internal_application_admin",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "go_pkg_sms_gateway_internal_application_sms",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "go_pkg_sms_gateway_internal_domain_wallet",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "go_pkg_sms_gateway_internal_interfaces_http_dto",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L12",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "handler_smshandler",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "handler_sms_handler_newsmshandler",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler",
+      "target": "handler_smshandler_sendsms",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler",
+      "target": "handler_smshandler_createwallet",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler",
+      "target": "handler_smshandler_getwallet",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler",
+      "target": "handler_smshandler_topupwallet",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler",
+      "target": "handler_smshandler_createchannel",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler",
+      "target": "handler_smshandler_listchannels",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler",
+      "target": "handler_smshandler_getwallettransactions",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_interfaces_http_handler_sms_handler_go",
+      "target": "handler_sms_handler_writeserviceerror",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L143",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_sendsms",
+      "target": "handler_sms_handler_writeserviceerror",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_createwallet",
+      "target": "handler_sms_handler_writeserviceerror",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_getwallet",
+      "target": "handler_sms_handler_writeserviceerror",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_topupwallet",
+      "target": "handler_sms_handler_writeserviceerror",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L90",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_createchannel",
+      "target": "handler_sms_handler_writeserviceerror",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_listchannels",
+      "target": "handler_sms_handler_writeserviceerror",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_getwallettransactions",
+      "target": "handler_sms_handler_writeserviceerror",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L132",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_interfaces_http_dto_dto_go",
+      "target": "dto_errorresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/dto/dto.go",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_interfaces_http_router_router_test_go",
+      "target": "go_pkg_net_http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router_test.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_router_router_test_go",
+      "target": "go_pkg_net_http_httptest",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router_test.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_router_router_test_go",
+      "target": "go_pkg_testing",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router_test.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_router_router_test_go",
+      "target": "go_pkg_sms_gateway_internal_interfaces_http_handler",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router_test.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_router_router_test_go",
+      "target": "router_router_test_testadminroutesrequireapikey",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router_test.go",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_interfaces_http_router_router_go",
+      "target": "go_pkg_crypto_subtle",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_router_router_go",
+      "target": "go_pkg_github_com_gin_gonic_gin",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_router_router_go",
+      "target": "go_pkg_net_http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_router_router_go",
+      "target": "go_pkg_sms_gateway_internal_interfaces_http_handler",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_interfaces_http_router_router_go",
+      "target": "router_router_setup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_interfaces_http_router_router_go",
+      "target": "router_router_requireapikey",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "router_router_setup",
+      "target": "router_router_requireapikey",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/interfaces/http/router/router.go",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "go_pkg_math_rand",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "go_pkg_sms_gateway_internal_domain_channel",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "go_pkg_sms_gateway_internal_domain_sms",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "go_pkg_sms_gateway_internal_domain_wallet",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "sms_sendsmscommand",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "sms_sendsmsresult",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "sms_channelfinder",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "sms_walletpayable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "sms_sender",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "sms_service",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "sms_service_newservice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_service",
+      "target": "sms_service_execute",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_go",
+      "target": "sms_service_generatemessageid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_service_execute",
+      "target": "sms_service_generatemessageid",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "go_pkg_testing",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "go_pkg_sms_gateway_internal_domain_channel",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "go_pkg_sms_gateway_internal_domain_sms",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "go_pkg_sms_gateway_internal_domain_wallet",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "sms_channelstub",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_channelstub",
+      "target": "sms_channelstub_getbyname",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "sms_coststub",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_coststub",
+      "target": "sms_coststub_getbylinetype",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "sms_walletstub",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_walletstub",
+      "target": "sms_walletstub_deductandrecord",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "sms_senderstub",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_senderstub",
+      "target": "sms_senderstub_send",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "sms_service_test_testexecuterejectsinvalidcommandbeforedependencies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "sms_service_test_testexecutechargesandsends",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_service_test_go",
+      "target": "sms_service_test_testexecutereturnssenderfailure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_dto_go",
+      "target": "go_pkg_sms_gateway_internal_domain_sms",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_sms_dto_go",
+      "target": "sms_sendsmsrequest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_dto_go",
+      "target": "sms_sendsmsresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_dto_go",
+      "target": "sms_dto_tocommand",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_sms_dto_go",
+      "target": "sms_dto_toresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_service_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_admin_service_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_admin_service_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_admin_service_go",
+      "target": "go_pkg_sms_gateway_internal_domain_channel",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_admin_service_go",
+      "target": "go_pkg_sms_gateway_internal_domain_wallet",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_admin_service_go",
+      "target": "go_pkg_strings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_admin_service_go",
+      "target": "admin_adminservice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_service_go",
+      "target": "admin_service_newadminservice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_adminservice",
+      "target": "admin_adminservice_createwallet",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_adminservice",
+      "target": "admin_adminservice_getwallet",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_adminservice",
+      "target": "admin_adminservice_topupwallet",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_adminservice",
+      "target": "admin_adminservice_createchannel",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_adminservice",
+      "target": "admin_adminservice_listchannels",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_adminservice",
+      "target": "admin_adminservice_getwallettransactions",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "go_pkg_sms_gateway_internal_domain_channel",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "go_pkg_sms_gateway_internal_domain_wallet",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "admin_createwalletrequest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "admin_topupwalletrequest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "admin_createchannelrequest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "admin_walletresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "admin_channelresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "admin_transactionresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "admin_dto_towalletresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "admin_dto_totransactionresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_application_admin_dto_go",
+      "target": "admin_dto_tochannelresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/application/admin/dto.go",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_log_slog",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_net_http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_os_signal",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_syscall",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_sms_gateway_internal_application_admin",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L13",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_sms_gateway_internal_application_sms",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L14",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_sms_gateway_internal_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L15",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_sms_gateway_internal_infrastructure_persistence",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L16",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_sms_gateway_internal_infrastructure_sms",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L17",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_sms_gateway_internal_interfaces_http_handler",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L18",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "go_pkg_sms_gateway_internal_interfaces_http_router",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L19",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "api_gateway_main_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_api_gateway_main_go",
+      "target": "api_gateway_main_run",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_main",
+      "target": "api_gateway_main_run",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_entity_test_testnewmoney",
+      "target": "wallet_entity_newmoney",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "wallet_entity_test_testmoneysubtract",
+      "target": "wallet_entity_mustmoney",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/domain/wallet/entity_test.go",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreschannelrepository_getbyname",
+      "target": "persistence_base_model_tochannelmodel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreschannelrepository_create",
+      "target": "persistence_base_model_tochannelmodel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreschannelrepository_list",
+      "target": "persistence_base_model_tochannelmodel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/channel_repository.go",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository_getbyid",
+      "target": "persistence_base_model_towalletmodel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository_mutateandrecord",
+      "target": "persistence_base_model_towalletmodel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgreswalletrepository_gettransactionsbywalletid",
+      "target": "persistence_base_model_towallettransactionmodel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/wallet_repository.go",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_postgressmscostrepository_getbylinetype",
+      "target": "persistence_base_model_tosmscostmodel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/sms_cost_repository.go",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_base_model_towalletmodel",
+      "target": "wallet_entity_mustmoney",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_base_model_towallettransactionmodel",
+      "target": "wallet_transactiontype",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "persistence_base_model_tosmscostmodel",
+      "target": "sms_linetype",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/infrastructure/persistence/base_model.go",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_sendsms",
+      "target": "sms_dto_tocommand",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_sendsms",
+      "target": "sms_dto_toresponse",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_createwallet",
+      "target": "admin_dto_towalletresponse",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_getwallet",
+      "target": "handler_helpers_parseidparam",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_getwallet",
+      "target": "admin_dto_towalletresponse",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_topupwallet",
+      "target": "handler_helpers_parseidparam",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_topupwallet",
+      "target": "admin_dto_towalletresponse",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_createchannel",
+      "target": "admin_dto_tochannelresponse",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_listchannels",
+      "target": "admin_dto_tochannelresponse",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_getwallettransactions",
+      "target": "handler_helpers_parseidparam",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "handler_smshandler_getwallettransactions",
+      "target": "admin_dto_totransactionresponse",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/handler/sms_handler.go",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "router_router_test_testadminroutesrequireapikey",
+      "target": "router_router_setup",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/interfaces/http/router/router_test.go",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_service_execute",
+      "target": "wallet_entity_newmoney",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/sms/service.go",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_service_test_testexecuterejectsinvalidcommandbeforedependencies",
+      "target": "sms_service_newservice",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_service_test_testexecutechargesandsends",
+      "target": "wallet_entity_mustmoney",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_service_test_testexecutechargesandsends",
+      "target": "sms_service_newservice",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_service_test_testexecutereturnssenderfailure",
+      "target": "wallet_entity_mustmoney",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_service_test_testexecutereturnssenderfailure",
+      "target": "sms_service_newservice",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/sms/service_test.go",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_dto_tocommand",
+      "target": "sms_linetype",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "sms_dto_tocommand",
+      "target": "sms_destination",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/sms/dto.go",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_adminservice_createwallet",
+      "target": "wallet_entity_newmoney",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_adminservice_topupwallet",
+      "target": "wallet_entity_newmoney",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/application/admin/service.go",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "config_config_load",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "persistence_database_connect",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "persistence_database_migrate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "persistence_channel_repository_newpostgreschannelrepository",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "persistence_wallet_repository_newpostgreswalletrepository",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "persistence_sms_cost_repository_newpostgressmscostrepository",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "sms_service_newservice",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "sms_mock_sender_newmocksender",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "admin_service_newadminservice",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "handler_sms_handler_newsmshandler",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "api_gateway_main_run",
+      "target": "router_router_setup",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/api-gateway/main.go",
+      "source_location": "L61",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "hyperedges": []
+}
