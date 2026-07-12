@@ -1,0 +1,8 @@
+.git
+.gitignore
+graphify-out
+deployment
+configs
+README.md
+*.log
+tmp
