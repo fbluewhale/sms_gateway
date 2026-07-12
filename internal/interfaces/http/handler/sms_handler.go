@@ -41,7 +41,7 @@ func (h *SMSHandler) SendSMS(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, appDTO.ToResponse(req, result))
+	c.JSON(http.StatusAccepted, appDTO.ToResponse(req, result))
 }
 
 func (h *SMSHandler) CreateWallet(c *gin.Context) {

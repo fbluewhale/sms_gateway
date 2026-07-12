@@ -50,7 +50,11 @@ fails unless `DB_PASSWORD` and `ADMIN_API_KEY` are explicitly configured.
 
 ## Routes
 
-- `POST /api/v1/sms` sends an SMS and charges its channel wallet.
+- `POST /api/v1/sms` charges the channel wallet, queues the SMS, and returns
+  `202 Accepted`. Express and normal messages are processed by independent
+  workers so one line cannot block the other. If asynchronous delivery fails,
+  the charged amount is credited back to the wallet and recorded as a refund
+  transaction using the SMS message ID.
 - Wallet, transaction, and channel routes under `/api/v1` are administrative
   and require `X-Admin-API-Key`.
 

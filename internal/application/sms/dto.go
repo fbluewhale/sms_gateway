@@ -11,7 +11,7 @@ type SendSMSRequest struct {
 }
 
 type SendSMSResponse struct {
-	Success          bool    `json:"success"`
+	Accepted         bool    `json:"accepted"`
 	MessageID        string  `json:"message_id"`
 	Cost             float64 `json:"cost"`
 	RemainingBalance float64 `json:"remaining_balance"`
@@ -30,7 +30,7 @@ func ToCommand(req SendSMSRequest) SendSMSCommand {
 
 func ToResponse(req SendSMSRequest, result *SendSMSResult) SendSMSResponse {
 	return SendSMSResponse{
-		Success:          true,
+		Accepted:         true,
 		MessageID:        result.MessageID,
 		Cost:             result.Cost,
 		RemainingBalance: result.RemainingBal,

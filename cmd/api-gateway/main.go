@@ -68,6 +68,11 @@ func run() error {
 	logger.Info("SMS Gateway started", "address", addr)
 	select {
 	case err := <-errCh:
+		shutdownCtx, cancel := context.WithTimeout(context.Background(), cfg.Server.ShutdownTimeout)
+		defer cancel()
+		if shutdownErr := smsService.Shutdown(shutdownCtx); shutdownErr != nil {
+			return shutdownErr
+		}
 		if !errors.Is(err, http.ErrServerClosed) {
 			return fmt.Errorf("serve HTTP: %w", err)
 		}
@@ -77,6 +82,9 @@ func run() error {
 		defer cancel()
 		if err := server.Shutdown(shutdownCtx); err != nil {
 			return fmt.Errorf("shutdown HTTP server: %w", err)
+		}
+		if err := smsService.Shutdown(shutdownCtx); err != nil {
+			return err
 		}
 		return nil
 	}
