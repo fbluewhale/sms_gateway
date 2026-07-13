@@ -33,7 +33,8 @@ inbox/deduplication key.
 Express and Normal use separate RabbitMQ queues, worker deployments, prefetch
 windows, and concurrency limits. The dispatcher publishes a bounded batch for
 each routing key on every pass, so a hot channel cannot hide a low-volume
-channel in the outbox. API replicas also have independent in-flight admission
+channel in the outbox. Within each line, pending events are round-robined by
+channel while preserving FIFO order per channel. API replicas also have independent in-flight admission
 budgets; an exhausted channel returns HTTP 429 while the other channel remains
 available.
 

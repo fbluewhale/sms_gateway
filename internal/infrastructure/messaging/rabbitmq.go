@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"sort"
 	"time"
 
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -83,9 +84,10 @@ func (d *Dispatcher) publishFairBatch(ctx context.Context) (int, error) {
 
 func (d *Dispatcher) publishLineBatch(ctx context.Context, line string, limit int) (int, error) {
 	var rows []persistence.SMSOutboxModel
-	if err := d.db.WithContext(ctx).Where("published_at IS NULL AND routing_key = ?", line).Order("id").Limit(limit).Find(&rows).Error; err != nil {
+	if err := d.db.WithContext(ctx).Where("published_at IS NULL AND routing_key = ?", line).Order("id").Limit(limit * 10).Find(&rows).Error; err != nil {
 		return 0, err
 	}
+	rows = selectFairRows(rows, limit)
 	if len(rows) == 0 {
 		return 0, nil
 	}
@@ -122,6 +124,48 @@ func (d *Dispatcher) publishLineBatch(ctx context.Context, line string, limit in
 		}
 	}
 	return len(rows), nil
+}
+
+// selectFairRows performs bounded round-robin scheduling by channel. The
+// outbox query is ordered by id, so each channel's slice remains FIFO while a
+// hot channel cannot occupy the whole publish batch.
+func selectFairRows(rows []persistence.SMSOutboxModel, limit int) []persistence.SMSOutboxModel {
+	if len(rows) <= limit {
+		return rows
+	}
+	groups := make(map[string][]persistence.SMSOutboxModel)
+	for _, row := range rows {
+		var event app.DeliveryEvent
+		channel := "__unknown__"
+		if json.Unmarshal(row.Payload, &event) == nil && event.ChannelName != "" {
+			channel = event.ChannelName
+		}
+		groups[channel] = append(groups[channel], row)
+	}
+	channels := make([]string, 0, len(groups))
+	for channel := range groups {
+		channels = append(channels, channel)
+	}
+	sort.Strings(channels)
+	selected := make([]persistence.SMSOutboxModel, 0, limit)
+	for len(selected) < limit {
+		progress := false
+		for _, channel := range channels {
+			if len(groups[channel]) == 0 {
+				continue
+			}
+			selected = append(selected, groups[channel][0])
+			groups[channel] = groups[channel][1:]
+			progress = true
+			if len(selected) == limit {
+				break
+			}
+		}
+		if !progress {
+			break
+		}
+	}
+	return selected
 }
 
 type Sender interface {

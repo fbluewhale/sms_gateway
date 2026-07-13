@@ -44,8 +44,10 @@ EXPRESS_WORKER_REPLICAS=6 NORMAL_WORKER_REPLICAS=2 \
 Each line has a dedicated durable quorum queue and a dedicated worker pool, so
 a 10,000 req/s burst on one line cannot consume the other line's consumers.
 The outbox dispatcher also takes a bounded batch from each line on every pass;
-this prevents starvation before events reach RabbitMQ. Worker concurrency and
-replica counts are independent per line. RabbitMQ management is available at
+within each line it round-robins by channel, so a hot customer cannot hide a
+low-volume customer. This prevents starvation before events reach RabbitMQ.
+Worker concurrency and replica counts are independent per line. RabbitMQ
+management is available at
 `http://localhost:15672`.
 
 ## Configuration
