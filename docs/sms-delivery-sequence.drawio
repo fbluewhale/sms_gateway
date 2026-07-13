@@ -1,0 +1,33 @@
+<mxfile host="app.diagrams.net" modified="2026-07-13T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="sms-sequence" name="SMS Delivery Sequence">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Accepted SMS: transactional outbox, fair dispatch, isolated workers, SLA/refund" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=18" vertex="1" parent="1"><mxGeometry x="40" y="20" width="900" height="40" as="geometry"/></mxCell>
+        <mxCell id="c1" value="Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="40" y="90" width="130" height="50" as="geometry"/></mxCell>
+        <mxCell id="c2" value="API service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1"><mxGeometry x="270" y="90" width="140" height="50" as="geometry"/></mxCell>
+        <mxCell id="c3" value="PostgreSQL" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="510" y="90" width="140" height="50" as="geometry"/></mxCell>
+        <mxCell id="c4" value="Dispatcher" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1"><mxGeometry x="750" y="90" width="140" height="50" as="geometry"/></mxCell>
+        <mxCell id="c5" value="RabbitMQ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="990" y="90" width="140" height="50" as="geometry"/></mxCell>
+        <mxCell id="c6" value="Line worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1"><mxGeometry x="1230" y="90" width="140" height="50" as="geometry"/></mxCell>
+        <mxCell id="c7" value="SMS provider" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="1450" y="90" width="140" height="50" as="geometry"/></mxCell>
+        <mxCell id="l1" style="edgeStyle=none;html=1;dashed=1;strokeColor=#999999" edge="1" parent="1" source="c1" target="c1"><mxGeometry x="105" y="140" width="0" height="650" as="geometry"/></mxCell>
+        <mxCell id="l2" style="edgeStyle=none;html=1;dashed=1;strokeColor=#999999" edge="1" parent="1" source="c2" target="c2"><mxGeometry x="335" y="140" width="0" height="650" as="geometry"/></mxCell>
+        <mxCell id="l3" style="edgeStyle=none;html=1;dashed=1;strokeColor=#999999" edge="1" parent="1" source="c3" target="c3"><mxGeometry x="580" y="140" width="0" height="650" as="geometry"/></mxCell>
+        <mxCell id="l4" style="edgeStyle=none;html=1;dashed=1;strokeColor=#999999" edge="1" parent="1" source="c4" target="c4"><mxGeometry x="820" y="140" width="0" height="650" as="geometry"/></mxCell>
+        <mxCell id="l5" style="edgeStyle=none;html=1;dashed=1;strokeColor=#999999" edge="1" parent="1" source="c5" target="c5"><mxGeometry x="1060" y="140" width="0" height="650" as="geometry"/></mxCell>
+        <mxCell id="l6" style="edgeStyle=none;html=1;dashed=1;strokeColor=#999999" edge="1" parent="1" source="c6" target="c6"><mxGeometry x="1300" y="140" width="0" height="650" as="geometry"/></mxCell>
+        <mxCell id="l7" style="edgeStyle=none;html=1;dashed=1;strokeColor=#999999" edge="1" parent="1" source="c7" target="c7"><mxGeometry x="1520" y="140" width="0" height="650" as="geometry"/></mxCell>
+        <mxCell id="m1" value="POST /api/v1/sms" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="c1" target="c2"><mxGeometry x="0" y="190" relative="1" as="geometry"/></mxCell>
+        <mxCell id="m2" value="debit wallet + insert outbox + return 202" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="c2" target="c3"><mxGeometry x="0" y="270" relative="1" as="geometry"/></mxCell>
+        <mxCell id="m3" value="poll pending express/normal rows" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="c4" target="c3"><mxGeometry x="0" y="350" relative="1" as="geometry"/></mxCell>
+        <mxCell id="m4" value="publish batch + publisher confirm" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="c4" target="c5"><mxGeometry x="0" y="430" relative="1" as="geometry"/></mxCell>
+        <mxCell id="m5" value="consume dedicated line queue" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="c5" target="c6"><mxGeometry x="0" y="510" relative="1" as="geometry"/></mxCell>
+        <mxCell id="m6" value="if before deadline: send(message_id)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="c6" target="c7"><mxGeometry x="0" y="590" relative="1" as="geometry"/></mxCell>
+        <mxCell id="m7" value="delivered + ack + terminal inbox record" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="c6" target="c3"><mxGeometry x="0" y="670" relative="1" as="geometry"/></mxCell>
+        <mxCell id="m8" value="if provider fails or deadline expires: refund + terminal record + requeue/ack" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="c6" target="c3"><mxGeometry x="0" y="750" relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

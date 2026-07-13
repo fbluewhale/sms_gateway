@@ -35,8 +35,8 @@ services:
 
   api:
     build:
-      context: ..
-      dockerfile: deployment/Dockerfile
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile
       network: host
       args:
         HTTP_PROXY: ${HTTP_PROXY:-http://127.0.0.1:10808}

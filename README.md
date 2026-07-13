@@ -2,12 +2,16 @@
 
 HTTP service for charging wallets and dispatching SMS requests through named channels.
 
+See [docs/architecture.md](docs/architecture.md) for package boundaries,
+failure semantics, SLA behavior, and editable Draw.io diagrams. Each major
+source tree also has a local README describing its responsibility.
+
 ## Docker Compose
 
 Start the API and PostgreSQL together:
 
 ```sh
-docker compose -f deployment/compose.yaml up --build
+docker compose -f deployments/docker/compose.yaml up --build
 ```
 
 The API listens on `http://localhost:8080`. The local admin API key is
@@ -16,14 +20,14 @@ environment variables when needed:
 
 ```sh
 ADMIN_API_KEY=change-me POSTGRES_PASSWORD=change-me APP_PORT=18080 \
-  docker compose -f deployment/compose.yaml up --build
+  docker compose -f deployments/docker/compose.yaml up --build
 ```
 
 Docker build traffic uses the host proxy at `http://127.0.0.1:10808` by default.
 The running API reaches the same proxy through Docker's host gateway. Override
 `HTTP_PROXY`, `HTTPS_PROXY`, or `NO_PROXY` when needed.
 
-Stop the stack with `docker compose -f deployment/compose.yaml down`. Add
+Stop the stack with `docker compose -f deployments/docker/compose.yaml down`. Add
 `--volumes` only when you also want to delete the PostgreSQL data volume.
 
 The stack also runs RabbitMQ, one transactional-outbox dispatcher, three
@@ -32,7 +36,7 @@ pools without changing the API:
 
 ```sh
 EXPRESS_WORKER_REPLICAS=6 NORMAL_WORKER_REPLICAS=2 \
-  docker compose -f deployment/compose.yaml up --build -d
+  docker compose -f deployments/docker/compose.yaml up --build -d
 ```
 
 Each line has a dedicated durable quorum queue and a dedicated worker pool, so

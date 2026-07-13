@@ -1,0 +1,81 @@
+<mxfile host="65bd71144e">
+    <diagram id="sms-architecture" name="Component Architecture">
+        <mxGraphModel dx="612" dy="522" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="client" value="SMS client&#xa;HTTP POST /api/v1/sms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="30" y="220" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="api" value="api-gateway&#xa;HTTP adapter + application service&#xa;per-line admission limits" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" parent="1" vertex="1">
+                    <mxGeometry x="260" y="190" width="230" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="postgres" value="PostgreSQL&#xa;wallets + ledger&#xa;sms_outbox + sms_deliveries" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" parent="1" vertex="1">
+                    <mxGeometry x="560" y="110" width="190" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="dispatcher" value="outbox-dispatcher&#xa;fair per-line batches&#xa;publisher confirms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" parent="1" vertex="1">
+                    <mxGeometry x="560" y="320" width="190" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="exchange" value="RabbitMQ&#xa;sms.delivery direct exchange" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" parent="1" vertex="1">
+                    <mxGeometry x="850" y="320" width="210" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="expressq" value="sms.express&#xa;durable quorum queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="1110" y="115" width="180" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="normalq" value="sms.normal&#xa;durable quorum queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="1120" y="430" width="180" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="expressw" value="Express workers&#xa;replicas + concurrency&#xa;deadline enforcement" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" parent="1" vertex="1">
+                    <mxGeometry x="1530" y="70" width="190" height="125" as="geometry"/>
+                </mxCell>
+                <mxCell id="normalw" value="Normal workers&#xa;replicas + concurrency" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" parent="1" vertex="1">
+                    <mxGeometry x="1350" y="307.5" width="190" height="105" as="geometry"/>
+                </mxCell>
+                <mxCell id="provider" value="External SMS provider&#xa;provider idempotency key = message_id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" parent="1" vertex="1">
+                    <mxGeometry x="1370" y="610" width="220" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" value="request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="client" target="api" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="debit + outbox event (one transaction)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="api" target="postgres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" value="poll pending rows" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="dispatcher" target="postgres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" value="persistent publish + confirm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="dispatcher" target="exchange" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="routing key express" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="exchange" target="expressq" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" value="routing key normal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="exchange" target="normalq" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" value="manual ack / requeue" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="expressq" target="expressw" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" value="manual ack / requeue" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="normalq" target="normalw" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" value="idempotent send" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="expressw" target="provider" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1625" y="402"/>
+                            <mxPoint x="1550" y="402"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e10" value="send" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="normalw" target="provider" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" value="delivered / refunded terminal record" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="expressw" target="postgres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" value="delivered / refunded terminal record" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" parent="1" source="normalw" target="postgres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

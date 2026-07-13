@@ -1,7 +1,7 @@
 .git
 .gitignore
 graphify-out
-deployment
+deployments
 configs
 README.md
 *.log
