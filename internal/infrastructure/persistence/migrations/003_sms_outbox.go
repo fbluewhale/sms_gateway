@@ -18,6 +18,9 @@ func upSMSOutbox(ctx context.Context, tx *sql.Tx) error {
 		CREATE INDEX idx_sms_outbox_pending ON sms_outbox (id) WHERE published_at IS NULL;
 		CREATE TABLE sms_deliveries (
 			message_id VARCHAR(255) PRIMARY KEY, status VARCHAR(32) NOT NULL,
+			wallet_id BIGINT NOT NULL DEFAULT 0, destination VARCHAR(64) NOT NULL DEFAULT '',
+			message TEXT NOT NULL DEFAULT '', line VARCHAR(32) NOT NULL DEFAULT '',
+			channel_name VARCHAR(255) NOT NULL DEFAULT '',
 			attempts INTEGER NOT NULL DEFAULT 0, last_error TEXT NOT NULL DEFAULT '',
 			created_at TIMESTAMP NOT NULL DEFAULT NOW(), updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
 			delivered_at TIMESTAMP NULL

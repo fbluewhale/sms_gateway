@@ -3,6 +3,8 @@ package handler
 import (
 	"errors"
 	"net/http"
+	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 
@@ -138,6 +140,43 @@ func (h *SMSHandler) GetWalletTransactions(c *gin.Context) {
 		resp = append(resp, admin.ToTransactionResponse(tx))
 	}
 	c.JSON(http.StatusOK, resp)
+}
+
+func (h *SMSHandler) ListSMSReports(c *gin.Context) {
+	id, ok := parseIDParam(c, "id")
+	if !ok {
+		return
+	}
+	limit := 100
+	if raw := c.Query("limit"); raw != "" {
+		if parsed, err := strconv.Atoi(raw); err == nil {
+			limit = parsed
+		}
+	}
+	reports, err := h.adminService.ListSMSReports(c.Request.Context(), id, limit)
+	if err != nil {
+		writeServiceError(c, err)
+		return
+	}
+	response := make([]admin.SMSDeliveryResponse, 0, len(reports))
+	for _, report := range reports {
+		response = append(response, admin.ToSMSDeliveryResponse(report))
+	}
+	c.JSON(http.StatusOK, response)
+}
+
+func (h *SMSHandler) GetSMSReport(c *gin.Context) {
+	messageID := strings.TrimSpace(c.Param("message_id"))
+	if messageID == "" {
+		c.JSON(http.StatusBadRequest, dto.ErrorResponse{Error: "message_id is required"})
+		return
+	}
+	report, err := h.adminService.GetSMSReport(c.Request.Context(), messageID)
+	if err != nil {
+		writeServiceError(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, admin.ToSMSDeliveryResponse(*report))
 }
 
 func writeServiceError(c *gin.Context, err error) {

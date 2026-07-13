@@ -18,3 +18,15 @@ func TestAdminRoutesRequireAPIKey(t *testing.T) {
 		t.Fatalf("status = %d", resp.Code)
 	}
 }
+
+func TestSMSReportRoutesRequireAPIKey(t *testing.T) {
+	r := router.Setup(&handler.SMSHandler{}, "secret")
+	for _, path := range []string{"/api/v1/wallets/1/sms", "/api/v1/sms/SMS-1"} {
+		req := httptest.NewRequest(http.MethodGet, path, nil)
+		resp := httptest.NewRecorder()
+		r.ServeHTTP(resp, req)
+		if resp.Code != http.StatusUnauthorized {
+			t.Fatalf("path %s status = %d", path, resp.Code)
+		}
+	}
+}

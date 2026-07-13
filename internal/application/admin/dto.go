@@ -2,9 +2,29 @@ package admin
 
 import (
 	"sms_gateway/internal/domain/channel"
+	"sms_gateway/internal/domain/sms"
 	"sms_gateway/internal/domain/wallet"
 	"time"
 )
+
+type SMSDeliveryResponse struct {
+	MessageID   string     `json:"message_id"`
+	WalletID    int64      `json:"wallet_id"`
+	Destination string     `json:"destination"`
+	Message     string     `json:"message"`
+	Line        string     `json:"line"`
+	Channel     string     `json:"channel"`
+	Status      string     `json:"status"`
+	Attempts    int        `json:"attempts"`
+	LastError   string     `json:"last_error,omitempty"`
+	CreatedAt   time.Time  `json:"created_at"`
+	UpdatedAt   time.Time  `json:"updated_at"`
+	DeliveredAt *time.Time `json:"delivered_at,omitempty"`
+}
+
+func ToSMSDeliveryResponse(r sms.DeliveryReport) SMSDeliveryResponse {
+	return SMSDeliveryResponse{MessageID: r.MessageID, WalletID: r.WalletID, Destination: string(r.Destination), Message: r.Message, Line: string(r.Line), Channel: r.ChannelName, Status: r.Status, Attempts: r.Attempts, LastError: r.LastError, CreatedAt: r.CreatedAt, UpdatedAt: r.UpdatedAt, DeliveredAt: r.DeliveredAt}
+}
 
 type CreateWalletRequest struct {
 	Balance float64 `json:"balance"`

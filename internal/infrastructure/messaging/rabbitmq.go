@@ -275,7 +275,7 @@ func (w *Worker) beginDelivery(ctx context.Context, event app.DeliveryEvent) (bo
 		var record persistence.SMSDeliveryModel
 		err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).First(&record, "message_id = ?", event.MessageID).Error
 		if err == gorm.ErrRecordNotFound {
-			record = persistence.SMSDeliveryModel{MessageID: event.MessageID, Status: "processing"}
+			record = persistence.SMSDeliveryModel{MessageID: event.MessageID, WalletID: event.WalletID, Destination: string(event.Destination), Message: event.Message, Line: string(event.Line), ChannelName: event.ChannelName, Status: "processing"}
 			if err := tx.Create(&record).Error; err != nil {
 				return err
 			}
@@ -304,7 +304,7 @@ func (w *Worker) processLegacy(ctx context.Context, event app.DeliveryEvent) err
 		var record persistence.SMSDeliveryModel
 		err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).First(&record, "message_id = ?", event.MessageID).Error
 		if err == gorm.ErrRecordNotFound {
-			record = persistence.SMSDeliveryModel{MessageID: event.MessageID, Status: "processing"}
+			record = persistence.SMSDeliveryModel{MessageID: event.MessageID, WalletID: event.WalletID, Destination: string(event.Destination), Message: event.Message, Line: string(event.Line), ChannelName: event.ChannelName, Status: "processing"}
 			if err := tx.Create(&record).Error; err != nil {
 				return err
 			}

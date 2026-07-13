@@ -24,8 +24,10 @@ func Setup(h *handler.SMSHandler, adminAPIKey string) *gin.Engine {
 		admin.GET("/wallets/:id", h.GetWallet)
 		admin.POST("/wallets/:id/topup", h.TopUpWallet)
 		admin.GET("/wallets/:id/transactions", h.GetWalletTransactions)
+		admin.GET("/wallets/:id/sms", h.ListSMSReports)
 		admin.POST("/channels", h.CreateChannel)
 		admin.GET("/channels", h.ListChannels)
+		admin.GET("/sms/:message_id", h.GetSMSReport)
 	}
 
 	return r

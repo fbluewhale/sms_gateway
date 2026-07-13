@@ -62,9 +62,10 @@ func run() error {
 	}
 	walletRepo := persistence.NewPostgresWalletRepositoryWithCache(db, reservations)
 	smsCostRepo := persistence.NewPostgresSMSCostRepository(db)
+	deliveryRepo := persistence.NewSMSDeliveryRepository(db)
 
 	smsService := smsApp.NewServiceWithReservation(channelRepo, walletRepo, smsCostRepo, reservations, cfg.ExpressSLA, cfg.ExpressInFlight, cfg.NormalInFlight)
-	adminService := admin.NewAdminService(walletRepo, channelRepo)
+	adminService := admin.NewAdminService(walletRepo, channelRepo, deliveryRepo)
 
 	h := handler.NewSMSHandler(smsService, adminService)
 	r := router.Setup(h, cfg.AdminAPIKey)

@@ -1,5 +1,7 @@
 package sms
 
+import "time"
+
 type LineType string
 
 const (
@@ -27,4 +29,19 @@ func (d Destination) IsValid() bool {
 
 func IsMessageValid(message string) bool {
 	return len([]rune(message)) > 0 && len([]rune(message)) <= 1600
+}
+
+type DeliveryReport struct {
+	MessageID   string
+	WalletID    int64
+	Destination Destination
+	Message     string
+	Line        LineType
+	ChannelName string
+	Status      string
+	Attempts    int
+	LastError   string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeliveredAt *time.Time
 }

@@ -85,6 +85,9 @@ fails unless `DB_PASSWORD` and `ADMIN_API_KEY` are explicitly configured.
   transaction using the SMS message ID.
 - Wallet, transaction, and channel routes under `/api/v1` are administrative
   and require `X-Admin-API-Key`.
+- `GET /api/v1/wallets/:id/sms` lists SMS delivery reports and
+  `GET /api/v1/sms/:message_id` returns one report. Both require the admin API
+  key.
 
 ## Verification
 

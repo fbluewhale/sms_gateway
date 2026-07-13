@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"sms_gateway/internal/domain/channel"
+	"sms_gateway/internal/domain/sms"
 	"sms_gateway/internal/domain/wallet"
 	"strings"
 )
@@ -12,18 +13,40 @@ import (
 var ErrInvalidInput = errors.New("invalid input")
 
 type AdminService struct {
-	walletRepo  wallet.WalletRepository
-	channelRepo channel.ChannelRepository
+	walletRepo   wallet.WalletRepository
+	channelRepo  channel.ChannelRepository
+	deliveryRepo SMSDeliveryRepository
+}
+
+type SMSDeliveryRepository interface {
+	ListByWallet(context.Context, int64, int) ([]sms.DeliveryReport, error)
+	GetByMessageID(context.Context, string) (*sms.DeliveryReport, error)
 }
 
 func NewAdminService(
 	walletRepo wallet.WalletRepository,
 	channelRepo channel.ChannelRepository,
+	deliveryRepo SMSDeliveryRepository,
 ) *AdminService {
 	return &AdminService{
-		walletRepo:  walletRepo,
-		channelRepo: channelRepo,
+		walletRepo:   walletRepo,
+		channelRepo:  channelRepo,
+		deliveryRepo: deliveryRepo,
 	}
+}
+
+func (s *AdminService) ListSMSReports(ctx context.Context, walletID int64, limit int) ([]sms.DeliveryReport, error) {
+	if s.deliveryRepo == nil {
+		return nil, errors.New("SMS delivery reports are not configured")
+	}
+	return s.deliveryRepo.ListByWallet(ctx, walletID, limit)
+}
+
+func (s *AdminService) GetSMSReport(ctx context.Context, messageID string) (*sms.DeliveryReport, error) {
+	if s.deliveryRepo == nil {
+		return nil, errors.New("SMS delivery reports are not configured")
+	}
+	return s.deliveryRepo.GetByMessageID(ctx, strings.TrimSpace(messageID))
 }
 
 func (s *AdminService) CreateWallet(ctx context.Context, initialBalance float64) (*wallet.Wallet, error) {

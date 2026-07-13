@@ -67,6 +67,11 @@ func (SMSOutboxModel) TableName() string { return "sms_outbox" }
 
 type SMSDeliveryModel struct {
 	MessageID   string    `gorm:"type:varchar(255);primaryKey"`
+	WalletID    int64     `gorm:"not null;index"`
+	Destination string    `gorm:"type:varchar(64);not null;default:''"`
+	Message     string    `gorm:"type:text;not null;default:''"`
+	Line        string    `gorm:"type:varchar(32);not null;default:''"`
+	ChannelName string    `gorm:"type:varchar(255);not null;default:''"`
 	Status      string    `gorm:"type:varchar(32);not null"`
 	Attempts    int       `gorm:"not null;default:0"`
 	LastError   string    `gorm:"type:text;not null;default:''"`
