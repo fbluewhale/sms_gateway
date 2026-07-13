@@ -53,7 +53,7 @@ func run() error {
 	walletRepo := persistence.NewPostgresWalletRepository(db)
 	smsCostRepo := persistence.NewPostgresSMSCostRepository(db)
 
-	smsService := smsApp.NewService(channelRepo, walletRepo, smsCostRepo)
+	smsService := smsApp.NewServiceWithPolicy(channelRepo, walletRepo, smsCostRepo, cfg.ExpressSLA, cfg.ExpressInFlight, cfg.NormalInFlight)
 	adminService := admin.NewAdminService(walletRepo, channelRepo)
 
 	h := handler.NewSMSHandler(smsService, adminService)

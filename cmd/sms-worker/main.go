@@ -17,6 +17,7 @@ import (
 func main() {
 	line := flag.String("line", "normal", "SMS line queue: express or normal")
 	prefetch := flag.Int("prefetch", 10, "maximum unacknowledged messages")
+	concurrency := flag.Int("concurrency", 5, "maximum concurrent provider calls")
 	flag.Parse()
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
@@ -31,7 +32,7 @@ func main() {
 		logger.Error("connect database", "error", err)
 		os.Exit(1)
 	}
-	worker, err := messaging.NewWorker(db, cfg.BrokerURL, *line, *prefetch, smsInfra.NewMockSender(logger))
+	worker, err := messaging.NewWorker(db, cfg.BrokerURL, *line, *prefetch, *concurrency, smsInfra.NewMockSender(logger))
 	if err != nil {
 		logger.Error("create worker", "error", err)
 		os.Exit(1)

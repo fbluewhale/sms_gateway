@@ -146,6 +146,9 @@ func writeServiceError(c *gin.Context, err error) {
 		c.JSON(http.StatusBadRequest, dto.ErrorResponse{Error: "invalid request"})
 	case errors.Is(err, wallet.ErrInsufficientFunds):
 		c.JSON(http.StatusUnprocessableEntity, dto.ErrorResponse{Error: "insufficient balance"})
+	case errors.Is(err, appDTO.ErrLineOverloaded):
+		c.Header("Retry-After", "1")
+		c.JSON(http.StatusTooManyRequests, dto.ErrorResponse{Error: "SMS line is at capacity"})
 	default:
 		c.Error(err) //nolint:errcheck -- captured by request logger
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{Error: "internal server error"})

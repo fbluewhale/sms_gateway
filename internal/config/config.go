@@ -8,10 +8,13 @@ import (
 )
 
 type Config struct {
-	Server      ServerConfig
-	DB          DatabaseConfig
-	AdminAPIKey string
-	BrokerURL   string
+	Server          ServerConfig
+	DB              DatabaseConfig
+	AdminAPIKey     string
+	BrokerURL       string
+	ExpressSLA      time.Duration
+	ExpressInFlight int
+	NormalInFlight  int
 }
 
 type ServerConfig struct {
@@ -66,6 +69,17 @@ func Load() (*Config, error) {
 		},
 		AdminAPIKey: getEnv("ADMIN_API_KEY", defaultAdminAPIKey),
 		BrokerURL:   getEnv("BROKER_URL", "amqp://guest:guest@localhost:5672/"),
+	}
+	expressSLA, err := time.ParseDuration(getEnv("EXPRESS_SMS_SLA", "5s"))
+	if err != nil || expressSLA <= 0 {
+		return nil, fmt.Errorf("EXPRESS_SMS_SLA must be a positive duration")
+	}
+	cfg.ExpressSLA = expressSLA
+	if _, err := fmt.Sscan(getEnv("EXPRESS_INFLIGHT_LIMIT", "100"), &cfg.ExpressInFlight); err != nil || cfg.ExpressInFlight < 1 {
+		return nil, fmt.Errorf("EXPRESS_INFLIGHT_LIMIT must be a positive integer")
+	}
+	if _, err := fmt.Sscan(getEnv("NORMAL_INFLIGHT_LIMIT", "20"), &cfg.NormalInFlight); err != nil || cfg.NormalInFlight < 1 {
+		return nil, fmt.Errorf("NORMAL_INFLIGHT_LIMIT must be a positive integer")
 	}
 	if cfg.DB.Password == "" {
 		return nil, errors.New("DB_PASSWORD is required")

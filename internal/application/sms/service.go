@@ -2,6 +2,7 @@ package sms
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 	"time"
@@ -10,6 +11,8 @@ import (
 	smsDomain "sms_gateway/internal/domain/sms"
 	"sms_gateway/internal/domain/wallet"
 )
+
+var ErrLineOverloaded = errors.New("SMS line is at capacity")
 
 type SendSMSCommand struct {
 	Line        smsDomain.LineType
@@ -31,6 +34,7 @@ type DeliveryEvent struct {
 	ChannelName string                `json:"channel_name"`
 	CostUnits   int64                 `json:"cost_units"`
 	CreatedAt   time.Time             `json:"created_at"`
+	DeadlineAt  time.Time             `json:"deadline_at,omitempty"`
 }
 
 type ChannelFinder interface {
@@ -46,13 +50,25 @@ type SMSCostFinder interface {
 }
 
 type Service struct {
-	channelRepo ChannelFinder
-	acceptor    SMSAcceptor
-	costRepo    SMSCostFinder
+	channelRepo  ChannelFinder
+	acceptor     SMSAcceptor
+	costRepo     SMSCostFinder
+	expressSLA   time.Duration
+	expressSlots chan struct{}
+	normalSlots  chan struct{}
 }
 
 func NewService(channelRepo ChannelFinder, acceptor SMSAcceptor, costRepo SMSCostFinder) *Service {
-	return &Service{channelRepo: channelRepo, acceptor: acceptor, costRepo: costRepo}
+	return NewServiceWithPolicy(channelRepo, acceptor, costRepo, 5*time.Second, 100, 20)
+}
+
+func NewServiceWithExpressSLA(channelRepo ChannelFinder, acceptor SMSAcceptor, costRepo SMSCostFinder, expressSLA time.Duration) *Service {
+	return NewServiceWithPolicy(channelRepo, acceptor, costRepo, expressSLA, 100, 20)
+}
+
+func NewServiceWithPolicy(channelRepo ChannelFinder, acceptor SMSAcceptor, costRepo SMSCostFinder, expressSLA time.Duration, expressLimit, normalLimit int) *Service {
+	return &Service{channelRepo: channelRepo, acceptor: acceptor, costRepo: costRepo, expressSLA: expressSLA,
+		expressSlots: make(chan struct{}, expressLimit), normalSlots: make(chan struct{}, normalLimit)}
 }
 
 func (s *Service) Execute(ctx context.Context, cmd SendSMSCommand) (*SendSMSResult, error) {
@@ -62,6 +78,10 @@ func (s *Service) Execute(ctx context.Context, cmd SendSMSCommand) (*SendSMSResu
 	if !cmd.Dest.IsValid() {
 		return nil, fmt.Errorf("destination is required")
 	}
+	if !s.acquire(cmd.Line) {
+		return nil, fmt.Errorf("%w: %s", ErrLineOverloaded, cmd.Line)
+	}
+	defer s.release(cmd.Line)
 	ch, err := s.channelRepo.GetByName(ctx, cmd.ChannelName)
 	if err != nil {
 		return nil, fmt.Errorf("channel not found: %w", err)
@@ -78,14 +98,39 @@ func (s *Service) Execute(ctx context.Context, cmd SendSMSCommand) (*SendSMSResu
 		return nil, fmt.Errorf("invalid configured cost")
 	}
 	messageID := generateMessageID()
+	now := time.Now().UTC()
 	event := DeliveryEvent{MessageID: messageID, WalletID: ch.WalletID, Destination: cmd.Dest, Line: cmd.Line,
-		ChannelName: cmd.ChannelName, CostUnits: cost.Units(), CreatedAt: time.Now().UTC()}
+		ChannelName: cmd.ChannelName, CostUnits: cost.Units(), CreatedAt: now}
+	if cmd.Line == smsDomain.LineTypeExpress {
+		event.DeadlineAt = now.Add(s.expressSLA)
+	}
 	w, err := s.acceptor.DeductAndEnqueue(ctx, ch.WalletID, cost, event,
 		fmt.Sprintf("SMS via %s (%s) to %s", cmd.ChannelName, cmd.Line, cmd.Dest))
 	if err != nil {
 		return nil, fmt.Errorf("accept SMS: %w", err)
 	}
 	return &SendSMSResult{MessageID: messageID, Cost: cost.Float64(), RemainingBal: w.Balance.Float64()}, nil
+}
+
+func (s *Service) acquire(line smsDomain.LineType) bool {
+	slots := s.normalSlots
+	if line == smsDomain.LineTypeExpress {
+		slots = s.expressSlots
+	}
+	select {
+	case slots <- struct{}{}:
+		return true
+	default:
+		return false
+	}
+}
+
+func (s *Service) release(line smsDomain.LineType) {
+	if line == smsDomain.LineTypeExpress {
+		<-s.expressSlots
+		return
+	}
+	<-s.normalSlots
 }
 
 func generateMessageID() string {

@@ -35,9 +35,12 @@ EXPRESS_WORKER_REPLICAS=6 NORMAL_WORKER_REPLICAS=2 \
   docker compose -f deployment/compose.yaml up --build -d
 ```
 
-Express uses its own durable quorum queue and a higher prefetch setting, so
-normal traffic cannot consume its worker capacity. RabbitMQ management is
-available at `http://localhost:15672`.
+Each line has a dedicated durable quorum queue and a dedicated worker pool, so
+a 10,000 req/s burst on one line cannot consume the other line's consumers.
+The outbox dispatcher also takes a bounded batch from each line on every pass;
+this prevents starvation before events reach RabbitMQ. Worker concurrency and
+replica counts are independent per line. RabbitMQ management is available at
+`http://localhost:15672`.
 
 ## Configuration
 
@@ -58,6 +61,9 @@ the `X-Admin-API-Key` header.
 | `DB_PASSWORD` | `postgres` locally, required in production |
 | `ADMIN_API_KEY` | `local-admin-key` locally, required in production |
 | `BROKER_URL` | `amqp://guest:guest@localhost:5672/` |
+| `EXPRESS_SMS_SLA` | `5s` |
+| `EXPRESS_INFLIGHT_LIMIT` | `100` per API replica |
+| `NORMAL_INFLIGHT_LIMIT` | `20` per API replica |
 
 Set `APP_ENV=production` in every production deployment. Production startup
 fails unless `DB_PASSWORD` and `ADMIN_API_KEY` are explicitly configured.
@@ -98,3 +104,18 @@ provider requires provider cooperation. A production sender must pass
 produce one provider-side effect; without it, the infrastructure guarantees
 at-least-once attempts with application-side deduplication. Failed deliveries
 are refunded atomically with their terminal delivery record.
+
+Express events carry an absolute deadline calculated from `EXPRESS_SMS_SLA`.
+Workers never start a provider attempt after that deadline; an expired request
+is terminally marked and refunded atomically. This is an enforceable processing
+deadline, not a promise that an external provider will deliver to a handset in
+that time. Production capacity must keep accepted Express throughput below
+`replicas * concurrency / provider_latency`, with headroom for failures. Monitor
+the age of the oldest `sms.express` message and scale the Express pool before it
+approaches the configured deadline.
+
+Ingress capacity is isolated too. Each API replica reserves independent
+in-flight budgets for Express and Normal requests. When one line exhausts its
+budget, only that line receives `429 Too Many Requests` with `Retry-After: 1`;
+the other line's request slots remain available. Tune these limits below the
+database pool capacity and retry rejected requests with jitter.

@@ -3,9 +3,11 @@ package tests
 import (
 	"bytes"
 	"context"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	app "sms_gateway/internal/application/sms"
 	"sms_gateway/internal/domain/channel"
@@ -37,6 +39,23 @@ type acceptorStub struct {
 	err    error
 }
 
+type isolatingAcceptor struct {
+	entered chan struct{}
+	release chan struct{}
+}
+
+func (a *isolatingAcceptor) DeductAndEnqueue(ctx context.Context, _ int64, _ wallet.Money, event app.DeliveryEvent, _ string) (*wallet.Wallet, error) {
+	if event.Line == domain.LineTypeExpress {
+		close(a.entered)
+		select {
+		case <-a.release:
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		}
+	}
+	return &wallet.Wallet{Balance: wallet.MustMoney(9)}, nil
+}
+
 func (s *acceptorStub) DeductAndEnqueue(_ context.Context, _ int64, _ wallet.Money, event app.DeliveryEvent, _ string) (*wallet.Wallet, error) {
 	s.called = true
 	s.event = event
@@ -53,6 +72,9 @@ func TestExecuteCreatesExpressBrokerEvent(t *testing.T) {
 	if !a.called || a.event.Line != domain.LineTypeExpress || a.event.MessageID != result.MessageID || a.event.CostUnits != 15000 {
 		t.Fatalf("event=%+v result=%+v", a.event, result)
 	}
+	if got := a.event.DeadlineAt.Sub(a.event.CreatedAt); got != 5*time.Second {
+		t.Fatalf("express SLA deadline = %s", got)
+	}
 }
 
 func TestExecuteCreatesNormalBrokerEvent(t *testing.T) {
@@ -63,6 +85,42 @@ func TestExecuteCreatesNormalBrokerEvent(t *testing.T) {
 	}
 	if a.event.Line != domain.LineTypeNormal {
 		t.Fatalf("line=%q", a.event.Line)
+	}
+	if !a.event.DeadlineAt.IsZero() {
+		t.Fatalf("normal event must not have express deadline: %s", a.event.DeadlineAt)
+	}
+}
+
+func TestExecuteUsesConfiguredExpressSLA(t *testing.T) {
+	a := &acceptorStub{result: &wallet.Wallet{Balance: wallet.MustMoney(9)}}
+	svc := app.NewServiceWithExpressSLA(activeChannel(), a, costStub{1}, 750*time.Millisecond)
+	if _, err := svc.Execute(context.Background(), command(domain.LineTypeExpress)); err != nil {
+		t.Fatal(err)
+	}
+	if got := a.event.DeadlineAt.Sub(a.event.CreatedAt); got != 750*time.Millisecond {
+		t.Fatalf("deadline = %s", got)
+	}
+}
+
+func TestAdmissionCapacityIsIsolatedPerLine(t *testing.T) {
+	a := &isolatingAcceptor{entered: make(chan struct{}), release: make(chan struct{})}
+	svc := app.NewServiceWithPolicy(activeChannel(), a, costStub{1}, time.Second, 1, 1)
+	done := make(chan error, 1)
+	go func() {
+		_, err := svc.Execute(context.Background(), command(domain.LineTypeExpress))
+		done <- err
+	}()
+	<-a.entered
+
+	if _, err := svc.Execute(context.Background(), command(domain.LineTypeExpress)); !errors.Is(err, app.ErrLineOverloaded) {
+		t.Fatalf("second express request error = %v", err)
+	}
+	if _, err := svc.Execute(context.Background(), command(domain.LineTypeNormal)); err != nil {
+		t.Fatalf("normal request was starved by express load: %v", err)
+	}
+	close(a.release)
+	if err := <-done; err != nil {
+		t.Fatalf("first express request: %v", err)
 	}
 }
 

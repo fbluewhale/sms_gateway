@@ -52,8 +52,12 @@ func (d *Dispatcher) Run(ctx context.Context) error {
 	ticker := time.NewTicker(250 * time.Millisecond)
 	defer ticker.Stop()
 	for {
-		if err := d.publishBatch(ctx); err != nil {
+		published, err := d.publishFairBatch(ctx)
+		if err != nil {
 			return err
+		}
+		if published > 0 {
+			continue
 		}
 		select {
 		case <-ctx.Done():
@@ -63,41 +67,61 @@ func (d *Dispatcher) Run(ctx context.Context) error {
 	}
 }
 
-func (d *Dispatcher) publishBatch(ctx context.Context) error {
+func (d *Dispatcher) publishFairBatch(ctx context.Context) (int, error) {
+	total := 0
+	// A bounded batch per routing key prevents a hot line from hiding the other
+	// line behind an unbounded prefix of older outbox rows.
+	for _, line := range []string{"express", "normal"} {
+		published, err := d.publishLineBatch(ctx, line, 100)
+		if err != nil {
+			return total, err
+		}
+		total += published
+	}
+	return total, nil
+}
+
+func (d *Dispatcher) publishLineBatch(ctx context.Context, line string, limit int) (int, error) {
 	var rows []persistence.SMSOutboxModel
-	if err := d.db.WithContext(ctx).Where("published_at IS NULL").Order("id").Limit(100).Find(&rows).Error; err != nil {
-		return err
+	if err := d.db.WithContext(ctx).Where("published_at IS NULL AND routing_key = ?", line).Order("id").Limit(limit).Find(&rows).Error; err != nil {
+		return 0, err
 	}
 	if len(rows) == 0 {
-		return nil
+		return 0, nil
 	}
 	ch, err := d.conn.Channel()
 	if err != nil {
-		return err
+		return 0, err
 	}
 	defer ch.Close()
 	if err := Declare(ch); err != nil {
-		return err
+		return 0, err
 	}
 	if err := ch.Confirm(false); err != nil {
-		return err
+		return 0, err
 	}
+	confirms := make([]*amqp.DeferredConfirmation, 0, len(rows))
 	for _, row := range rows {
 		dc, err := ch.PublishWithDeferredConfirmWithContext(ctx, Exchange, row.RoutingKey, true, false, amqp.Publishing{
 			DeliveryMode: amqp.Persistent, ContentType: "application/json", MessageId: row.MessageID, Timestamp: row.CreatedAt, Body: row.Payload,
 		})
 		if err != nil {
-			return err
+			return 0, err
 		}
-		if dc == nil || !dc.Wait() {
-			return fmt.Errorf("publish not confirmed: %s", row.MessageID)
+		confirms = append(confirms, dc)
+	}
+	// Publish the complete line batch before waiting. RabbitMQ can pipeline the
+	// confirms, avoiding one network round trip per SMS at high request rates.
+	for i, row := range rows {
+		if confirms[i] == nil || !confirms[i].Wait() {
+			return 0, fmt.Errorf("publish not confirmed: %s", row.MessageID)
 		}
 		now := time.Now().UTC()
 		if err := d.db.WithContext(ctx).Model(&persistence.SMSOutboxModel{}).Where("id = ? AND published_at IS NULL", row.ID).Update("published_at", now).Error; err != nil {
-			return err
+			return 0, err
 		}
 	}
-	return nil
+	return len(rows), nil
 }
 
 type Sender interface {
@@ -105,22 +129,26 @@ type Sender interface {
 }
 
 type Worker struct {
-	db       *gorm.DB
-	conn     *amqp.Connection
-	line     string
-	prefetch int
-	sender   Sender
+	db          *gorm.DB
+	conn        *amqp.Connection
+	line        string
+	prefetch    int
+	concurrency int
+	sender      Sender
 }
 
-func NewWorker(db *gorm.DB, brokerURL, line string, prefetch int, sender Sender) (*Worker, error) {
+func NewWorker(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, sender Sender) (*Worker, error) {
 	if line != "express" && line != "normal" {
 		return nil, fmt.Errorf("invalid worker line %q", line)
+	}
+	if concurrency < 1 || prefetch < concurrency {
+		return nil, fmt.Errorf("prefetch (%d) must be at least concurrency (%d)", prefetch, concurrency)
 	}
 	conn, err := amqp.Dial(brokerURL)
 	if err != nil {
 		return nil, err
 	}
-	return &Worker{db: db, conn: conn, line: line, prefetch: prefetch, sender: sender}, nil
+	return &Worker{db: db, conn: conn, line: line, prefetch: prefetch, concurrency: concurrency, sender: sender}, nil
 }
 
 func (w *Worker) Close() error { return w.conn.Close() }
@@ -141,13 +169,30 @@ func (w *Worker) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
+	errCh := make(chan error, w.concurrency)
+	for i := 0; i < w.concurrency; i++ {
+		go w.consume(ctx, deliveries, errCh)
+	}
+	select {
+	case <-ctx.Done():
+		return nil
+	case err := <-errCh:
+		return err
+	}
+}
+
+func (w *Worker) consume(ctx context.Context, deliveries <-chan amqp.Delivery, errCh chan<- error) {
 	for {
 		select {
 		case <-ctx.Done():
-			return nil
+			return
 		case d, ok := <-deliveries:
 			if !ok {
-				return fmt.Errorf("delivery channel closed")
+				select {
+				case errCh <- fmt.Errorf("delivery channel closed"):
+				default:
+				}
+				return
 			}
 			if err := w.process(ctx, d.Body); err != nil {
 				_ = d.Nack(false, true)
@@ -177,18 +222,25 @@ func (w *Worker) process(ctx context.Context, body []byte) error {
 		if record.Status == "delivered" || record.Status == "refunded" {
 			return nil
 		}
+		if !event.DeadlineAt.IsZero() && time.Now().UTC().After(event.DeadlineAt) {
+			return w.refund(tx, ctx, &record, event, "express SMS SLA expired before provider attempt")
+		}
 		if err := w.sender.Send(ctx, event); err != nil {
-			amount, moneyErr := wallet.MoneyFromUnits(event.CostUnits)
-			if moneyErr != nil {
-				return moneyErr
-			}
-			repo := persistence.NewPostgresWalletRepository(tx)
-			if _, refundErr := repo.CreditAndRecord(ctx, event.WalletID, amount, event.MessageID, "Refund for failed SMS delivery"); refundErr != nil {
-				return refundErr
-			}
-			return tx.Model(&record).Updates(map[string]any{"status": "refunded", "last_error": err.Error(), "attempts": gorm.Expr("attempts + 1")}).Error
+			return w.refund(tx, ctx, &record, event, err.Error())
 		}
 		now := time.Now().UTC()
 		return tx.Model(&record).Updates(map[string]any{"status": "delivered", "delivered_at": now, "attempts": gorm.Expr("attempts + 1")}).Error
 	})
+}
+
+func (w *Worker) refund(tx *gorm.DB, ctx context.Context, record *persistence.SMSDeliveryModel, event app.DeliveryEvent, reason string) error {
+	amount, err := wallet.MoneyFromUnits(event.CostUnits)
+	if err != nil {
+		return err
+	}
+	repo := persistence.NewPostgresWalletRepository(tx)
+	if _, err := repo.CreditAndRecord(ctx, event.WalletID, amount, event.MessageID, "Refund for failed SMS delivery"); err != nil {
+		return err
+	}
+	return tx.Model(record).Updates(map[string]any{"status": "refunded", "last_error": reason, "attempts": gorm.Expr("attempts + 1")}).Error
 }
