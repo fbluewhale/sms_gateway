@@ -13,7 +13,11 @@ RUN go mod download
 
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" \
-    -o /out/sms-gateway ./cmd/api-gateway
+    -o /out/sms-gateway ./cmd/api-gateway \
+    && CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" \
+    -o /out/outbox-dispatcher ./cmd/outbox-dispatcher \
+    && CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" \
+    -o /out/sms-worker ./cmd/sms-worker
 
 FROM alpine:3.20
 
@@ -23,6 +27,8 @@ RUN apk add --no-cache ca-certificates tzdata \
 
 WORKDIR /app
 COPY --from=build /out/sms-gateway /app/sms-gateway
+COPY --from=build /out/outbox-dispatcher /app/outbox-dispatcher
+COPY --from=build /out/sms-worker /app/sms-worker
 
 USER app
 EXPOSE 8080

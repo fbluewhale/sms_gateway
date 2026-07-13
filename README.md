@@ -26,6 +26,19 @@ The running API reaches the same proxy through Docker's host gateway. Override
 Stop the stack with `docker compose -f deployment/compose.yaml down`. Add
 `--volumes` only when you also want to delete the PostgreSQL data volume.
 
+The stack also runs RabbitMQ, one transactional-outbox dispatcher, three
+express workers, and two normal workers. Scale the independently routed worker
+pools without changing the API:
+
+```sh
+EXPRESS_WORKER_REPLICAS=6 NORMAL_WORKER_REPLICAS=2 \
+  docker compose -f deployment/compose.yaml up --build -d
+```
+
+Express uses its own durable quorum queue and a higher prefetch setting, so
+normal traffic cannot consume its worker capacity. RabbitMQ management is
+available at `http://localhost:15672`.
+
 ## Configuration
 
 The service is configured through environment variables. Local development uses
@@ -44,6 +57,7 @@ the `X-Admin-API-Key` header.
 | `DB_SSLMODE` | `disable` locally, `require` in production |
 | `DB_PASSWORD` | `postgres` locally, required in production |
 | `ADMIN_API_KEY` | `local-admin-key` locally, required in production |
+| `BROKER_URL` | `amqp://guest:guest@localhost:5672/` |
 
 Set `APP_ENV=production` in every production deployment. Production startup
 fails unless `DB_PASSWORD` and `ADMIN_API_KEY` are explicitly configured.
@@ -69,3 +83,18 @@ go build ./...
 Wallet balances are represented internally as fixed four-decimal units. Credit
 and debit ledger records are committed atomically while locking the wallet row,
 preventing concurrent balance overwrites.
+
+## Delivery guarantees
+
+The API commits the wallet debit, ledger entry, and outbox event in one
+PostgreSQL transaction. The dispatcher uses persistent messages, durable quorum
+queues, mandatory routing, and publisher confirms. Consumers use manual
+acknowledgements and a `sms_deliveries` inbox table keyed by message ID, making
+duplicate broker deliveries safe across multiple consumer replicas.
+
+Strict exactly-once delivery across PostgreSQL, RabbitMQ, and an external SMS
+provider requires provider cooperation. A production sender must pass
+`message_id` as the provider's idempotency key. With that contract, retries
+produce one provider-side effect; without it, the infrastructure guarantees
+at-least-once attempts with application-side deduplication. Failed deliveries
+are refunded atomically with their terminal delivery record.

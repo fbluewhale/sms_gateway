@@ -2,16 +2,49 @@ package persistence
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
+	app "sms_gateway/internal/application/sms"
 	"sms_gateway/internal/domain/wallet"
 )
 
 type PostgresWalletRepository struct {
 	db *gorm.DB
+}
+
+func (r *PostgresWalletRepository) DeductAndEnqueue(ctx context.Context, walletID int64, amount wallet.Money, event app.DeliveryEvent, desc string) (*wallet.Wallet, error) {
+	payload, err := json.Marshal(event)
+	if err != nil {
+		return nil, fmt.Errorf("marshal SMS event: %w", err)
+	}
+	var result *wallet.Wallet
+	err = r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		var model WalletModel
+		if err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).First(&model, walletID).Error; err != nil {
+			return fmt.Errorf("wallet not found: %w", err)
+		}
+		w := toWalletModel(&model)
+		if !w.CanAfford(amount) {
+			return fmt.Errorf("%w: have %s, need %s", wallet.ErrInsufficientFunds, w.Balance, amount)
+		}
+		w.Deduct(amount)
+		if err := tx.Model(&WalletModel{}).Where("id = ?", walletID).Update("balance", w.Balance.Float64()).Error; err != nil {
+			return fmt.Errorf("update balance: %w", err)
+		}
+		if err := tx.Create(&WalletTransactionModel{WalletID: walletID, Amount: -amount.Float64(), Type: string(wallet.TransactionTypeDebit), Description: desc, ReferenceID: event.MessageID}).Error; err != nil {
+			return fmt.Errorf("record transaction: %w", err)
+		}
+		if err := tx.Create(&SMSOutboxModel{MessageID: event.MessageID, RoutingKey: string(event.Line), Payload: payload}).Error; err != nil {
+			return fmt.Errorf("record SMS outbox: %w", err)
+		}
+		result = w
+		return nil
+	})
+	return result, err
 }
 
 func NewPostgresWalletRepository(db *gorm.DB) *PostgresWalletRepository {

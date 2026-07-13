@@ -14,7 +14,6 @@ import (
 	smsApp "sms_gateway/internal/application/sms"
 	"sms_gateway/internal/config"
 	"sms_gateway/internal/infrastructure/persistence"
-	smsInfra "sms_gateway/internal/infrastructure/sms"
 	"sms_gateway/internal/interfaces/http/handler"
 	"sms_gateway/internal/interfaces/http/router"
 )
@@ -54,7 +53,7 @@ func run() error {
 	walletRepo := persistence.NewPostgresWalletRepository(db)
 	smsCostRepo := persistence.NewPostgresSMSCostRepository(db)
 
-	smsService := smsApp.NewService(channelRepo, walletRepo, smsCostRepo, smsInfra.NewMockSender(logger))
+	smsService := smsApp.NewService(channelRepo, walletRepo, smsCostRepo)
 	adminService := admin.NewAdminService(walletRepo, channelRepo)
 
 	h := handler.NewSMSHandler(smsService, adminService)
@@ -68,11 +67,6 @@ func run() error {
 	logger.Info("SMS Gateway started", "address", addr)
 	select {
 	case err := <-errCh:
-		shutdownCtx, cancel := context.WithTimeout(context.Background(), cfg.Server.ShutdownTimeout)
-		defer cancel()
-		if shutdownErr := smsService.Shutdown(shutdownCtx); shutdownErr != nil {
-			return shutdownErr
-		}
 		if !errors.Is(err, http.ErrServerClosed) {
 			return fmt.Errorf("serve HTTP: %w", err)
 		}
@@ -82,9 +76,6 @@ func run() error {
 		defer cancel()
 		if err := server.Shutdown(shutdownCtx); err != nil {
 			return fmt.Errorf("shutdown HTTP server: %w", err)
-		}
-		if err := smsService.Shutdown(shutdownCtx); err != nil {
-			return err
 		}
 		return nil
 	}

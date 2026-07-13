@@ -11,6 +11,7 @@ type Config struct {
 	Server      ServerConfig
 	DB          DatabaseConfig
 	AdminAPIKey string
+	BrokerURL   string
 }
 
 type ServerConfig struct {
@@ -64,6 +65,7 @@ func Load() (*Config, error) {
 			SSLMode:  getEnv("DB_SSLMODE", defaultSSLMode),
 		},
 		AdminAPIKey: getEnv("ADMIN_API_KEY", defaultAdminAPIKey),
+		BrokerURL:   getEnv("BROKER_URL", "amqp://guest:guest@localhost:5672/"),
 	}
 	if cfg.DB.Password == "" {
 		return nil, errors.New("DB_PASSWORD is required")

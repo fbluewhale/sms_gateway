@@ -1,6 +1,22 @@
 name: code_challenge
 
 services:
+  rabbitmq:
+    image: rabbitmq:4.1-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-sms}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-sms}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    ports:
+      - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    restart: unless-stopped
+
   postgres:
     image: postgres:16-alpine
     environment:
@@ -36,6 +52,7 @@ services:
       DB_NAME: ${POSTGRES_DB:-sms_gateway}
       DB_SSLMODE: disable
       ADMIN_API_KEY: ${ADMIN_API_KEY:-local-admin-key}
+      BROKER_URL: amqp://${RABBITMQ_USER:-sms}:${RABBITMQ_PASSWORD:-sms}@rabbitmq:5672/
       HTTP_PROXY: http://host.docker.internal:10808
       HTTPS_PROXY: http://host.docker.internal:10808
       NO_PROXY: postgres,localhost,127.0.0.1
@@ -44,11 +61,52 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     ports:
       - "${APP_PORT:-8080}:8080"
     init: true
     stop_grace_period: 15s
     restart: unless-stopped
 
+  outbox-dispatcher:
+    image: code_challenge-api
+    command: ["/app/outbox-dispatcher"]
+    entrypoint: []
+    environment: &worker-env
+      APP_ENV: production
+      DB_HOST: postgres
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DB_NAME: ${POSTGRES_DB:-sms_gateway}
+      DB_SSLMODE: disable
+      ADMIN_API_KEY: ${ADMIN_API_KEY:-local-admin-key}
+      BROKER_URL: amqp://${RABBITMQ_USER:-sms}:${RABBITMQ_PASSWORD:-sms}@rabbitmq:5672/
+    depends_on: &worker-dependencies
+      postgres: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+    restart: unless-stopped
+
+  express-worker:
+    image: code_challenge-api
+    command: ["/app/sms-worker", "-line", "express", "-prefetch", "20"]
+    entrypoint: []
+    environment: *worker-env
+    depends_on: *worker-dependencies
+    deploy:
+      replicas: ${EXPRESS_WORKER_REPLICAS:-3}
+    restart: unless-stopped
+
+  normal-worker:
+    image: code_challenge-api
+    command: ["/app/sms-worker", "-line", "normal", "-prefetch", "10"]
+    entrypoint: []
+    environment: *worker-env
+    depends_on: *worker-dependencies
+    deploy:
+      replicas: ${NORMAL_WORKER_REPLICAS:-2}
+    restart: unless-stopped
+
 volumes:
   postgres-data:
+  rabbitmq-data:
