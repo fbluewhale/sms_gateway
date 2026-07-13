@@ -2,6 +2,7 @@ package tests
 
 import (
 	"testing"
+	"time"
 
 	"sms_gateway/internal/config"
 )
@@ -48,5 +49,43 @@ func TestLoadAcceptsProductionSecrets(t *testing.T) {
 	}
 	if cfg.DB.SSLMode != "require" {
 		t.Fatalf("DB SSL mode = %q; want require", cfg.DB.SSLMode)
+	}
+}
+
+func TestLoadProviderCircuitBreakerConfiguration(t *testing.T) {
+	t.Setenv("SMS_PROVIDER_CIRCUIT_FAILURE_THRESHOLD", "7")
+	t.Setenv("SMS_PROVIDER_CIRCUIT_COOLDOWN", "45s")
+
+	cfg, err := config.Load()
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+	if cfg.ProviderCircuitFailureThreshold != 7 {
+		t.Fatalf("failure threshold = %d, want 7", cfg.ProviderCircuitFailureThreshold)
+	}
+	if cfg.ProviderCircuitCooldown != 45*time.Second {
+		t.Fatalf("cooldown = %s, want 45s", cfg.ProviderCircuitCooldown)
+	}
+}
+
+func TestLoadRejectsInvalidProviderCircuitBreakerConfiguration(t *testing.T) {
+	tests := []struct {
+		name      string
+		threshold string
+		cooldown  string
+	}{
+		{name: "zero threshold", threshold: "0", cooldown: "30s"},
+		{name: "invalid threshold", threshold: "three", cooldown: "30s"},
+		{name: "zero cooldown", threshold: "3", cooldown: "0s"},
+		{name: "invalid cooldown", threshold: "3", cooldown: "later"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Setenv("SMS_PROVIDER_CIRCUIT_FAILURE_THRESHOLD", tt.threshold)
+			t.Setenv("SMS_PROVIDER_CIRCUIT_COOLDOWN", tt.cooldown)
+			if _, err := config.Load(); err == nil {
+				t.Fatal("Load() error = nil, want invalid circuit-breaker configuration error")
+			}
+		})
 	}
 }

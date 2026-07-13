@@ -7,5 +7,7 @@ Infrastructure adapts external systems to application/domain contracts:
 - `messaging`: RabbitMQ exchange/queue declaration, fair outbox publishing,
   publisher confirms, worker consumption, acknowledgements, deduplication, and
   refunds.
-- `sms`: provider adapters; the current mock sender is suitable only for local
-  verification.
+- `sms`: provider adapters, round-robin routing, and an independent
+  closed/open/half-open circuit breaker for each provider. The three mock
+  providers have different latency and random failure profiles and are suitable
+  only for local verification.

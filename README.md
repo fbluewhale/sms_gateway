@@ -81,6 +81,8 @@ the `X-Admin-API-Key` header.
 | `EXPRESS_INFLIGHT_LIMIT` | `100` per API replica |
 | `NORMAL_INFLIGHT_LIMIT` | `20` per API replica |
 | `SMS_PROVIDER_TIMEOUT` | `10s` |
+| `SMS_PROVIDER_CIRCUIT_FAILURE_THRESHOLD` | `3` consecutive failures |
+| `SMS_PROVIDER_CIRCUIT_COOLDOWN` | `30s` |
 
 Set `APP_ENV=production` in every production deployment. Production startup
 fails unless `DB_PASSWORD` and `ADMIN_API_KEY` are explicitly configured.
@@ -146,6 +148,14 @@ approaches the configured deadline.
 Provider calls are bounded by `SMS_PROVIDER_TIMEOUT` and, for Express, by the
 remaining time until `deadline_at`, so a stuck provider call cannot consume the
 entire Express worker pool.
+
+Workers distribute requests round-robin across three distinct local mock
+providers. Each provider has its own concurrency-safe circuit breaker. After
+`SMS_PROVIDER_CIRCUIT_FAILURE_THRESHOLD` consecutive failures, that provider is
+skipped until `SMS_PROVIDER_CIRCUIT_COOLDOWN` elapses. One request is then
+allowed through in the half-open state; success closes the circuit and failure
+reopens it. A provider that actually attempts a send is never automatically
+retried through another provider, preserving the exactly-once provider contract.
 
 Ingress capacity is isolated too. Each API replica reserves independent
 in-flight budgets for Express and Normal requests. When one line exhausts its

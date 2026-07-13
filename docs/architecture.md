@@ -15,8 +15,8 @@ HTTP router/handler -> application services -> domain rules
 
 outbox dispatcher -> RabbitMQ exchange -> dedicated Express/Normal queues
                                               |
-                                              +-> Express worker pool -> SMS provider
-                                              +-> Normal worker pool -> SMS provider
+                                              +-> Express worker pool -> provider pool
+                                              +-> Normal worker pool -> provider pool
 ```
 
 The API process first reserves credit in Redis with a Lua script. The reservation
@@ -42,6 +42,14 @@ Express events carry `deadline_at`. A worker will not start an external provider
 attempt after that deadline and refunds the charge atomically. This is a
 processing deadline for accepted requests. End-to-end handset delivery still
 depends on provider availability and provider-side idempotency.
+
+Each worker process owns a round-robin pool of three distinct mock providers.
+Every provider is protected by an independent circuit breaker with closed,
+open, and half-open states. Open providers are skipped before a send attempt;
+after the configurable cooldown, one half-open probe determines whether that
+provider returns to service. A failed attempted send is not retried through a
+second provider because doing so would weaken the exactly-once delivery
+contract when a provider response is ambiguous.
 
 ## Failure and retry behavior
 

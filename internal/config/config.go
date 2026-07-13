@@ -8,15 +8,17 @@ import (
 )
 
 type Config struct {
-	Server          ServerConfig
-	DB              DatabaseConfig
-	AdminAPIKey     string
-	BrokerURL       string
-	RedisURL        string
-	ExpressSLA      time.Duration
-	ExpressInFlight int
-	NormalInFlight  int
-	ProviderTimeout time.Duration
+	Server                          ServerConfig
+	DB                              DatabaseConfig
+	AdminAPIKey                     string
+	BrokerURL                       string
+	RedisURL                        string
+	ExpressSLA                      time.Duration
+	ExpressInFlight                 int
+	NormalInFlight                  int
+	ProviderTimeout                 time.Duration
+	ProviderCircuitFailureThreshold int
+	ProviderCircuitCooldown         time.Duration
 }
 
 type ServerConfig struct {
@@ -89,6 +91,14 @@ func Load() (*Config, error) {
 		return nil, fmt.Errorf("SMS_PROVIDER_TIMEOUT must be a positive duration")
 	}
 	cfg.ProviderTimeout = providerTimeout
+	if _, err := fmt.Sscan(getEnv("SMS_PROVIDER_CIRCUIT_FAILURE_THRESHOLD", "3"), &cfg.ProviderCircuitFailureThreshold); err != nil || cfg.ProviderCircuitFailureThreshold < 1 {
+		return nil, fmt.Errorf("SMS_PROVIDER_CIRCUIT_FAILURE_THRESHOLD must be a positive integer")
+	}
+	providerCircuitCooldown, err := time.ParseDuration(getEnv("SMS_PROVIDER_CIRCUIT_COOLDOWN", "30s"))
+	if err != nil || providerCircuitCooldown <= 0 {
+		return nil, fmt.Errorf("SMS_PROVIDER_CIRCUIT_COOLDOWN must be a positive duration")
+	}
+	cfg.ProviderCircuitCooldown = providerCircuitCooldown
 	if cfg.DB.Password == "" {
 		return nil, errors.New("DB_PASSWORD is required")
 	}
