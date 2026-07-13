@@ -44,7 +44,7 @@ func main() {
 		logger.Error("connect Redis", "error", err)
 		os.Exit(1)
 	}
-	worker, err := messaging.NewWorkerWithReservation(db, cfg.BrokerURL, *line, *prefetch, *concurrency, smsInfra.NewMockSender(logger), reservations)
+	worker, err := messaging.NewWorkerWithReservationAndTimeout(db, cfg.BrokerURL, *line, *prefetch, *concurrency, smsInfra.NewMockSender(logger), reservations, cfg.ProviderTimeout)
 	if err != nil {
 		logger.Error("create worker", "error", err)
 		os.Exit(1)

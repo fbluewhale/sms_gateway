@@ -16,6 +16,7 @@ type Config struct {
 	ExpressSLA      time.Duration
 	ExpressInFlight int
 	NormalInFlight  int
+	ProviderTimeout time.Duration
 }
 
 type ServerConfig struct {
@@ -83,6 +84,11 @@ func Load() (*Config, error) {
 	if _, err := fmt.Sscan(getEnv("NORMAL_INFLIGHT_LIMIT", "20"), &cfg.NormalInFlight); err != nil || cfg.NormalInFlight < 1 {
 		return nil, fmt.Errorf("NORMAL_INFLIGHT_LIMIT must be a positive integer")
 	}
+	providerTimeout, err := time.ParseDuration(getEnv("SMS_PROVIDER_TIMEOUT", "10s"))
+	if err != nil || providerTimeout <= 0 {
+		return nil, fmt.Errorf("SMS_PROVIDER_TIMEOUT must be a positive duration")
+	}
+	cfg.ProviderTimeout = providerTimeout
 	if cfg.DB.Password == "" {
 		return nil, errors.New("DB_PASSWORD is required")
 	}

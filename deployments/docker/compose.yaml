@@ -68,6 +68,7 @@ services:
       EXPRESS_SMS_SLA: ${EXPRESS_SMS_SLA:-5s}
       EXPRESS_INFLIGHT_LIMIT: ${EXPRESS_INFLIGHT_LIMIT:-100}
       NORMAL_INFLIGHT_LIMIT: ${NORMAL_INFLIGHT_LIMIT:-20}
+      SMS_PROVIDER_TIMEOUT: ${SMS_PROVIDER_TIMEOUT:-10s}
       HTTP_PROXY: http://host.docker.internal:10808
       HTTPS_PROXY: http://host.docker.internal:10808
       NO_PROXY: postgres,localhost,127.0.0.1
@@ -100,6 +101,7 @@ services:
       ADMIN_API_KEY: ${ADMIN_API_KEY:-local-admin-key}
       BROKER_URL: amqp://${RABBITMQ_USER:-sms}:${RABBITMQ_PASSWORD:-sms}@rabbitmq:5672/
       REDIS_URL: redis://redis:6379/0
+      SMS_PROVIDER_TIMEOUT: ${SMS_PROVIDER_TIMEOUT:-10s}
     depends_on: &worker-dependencies
       postgres: {condition: service_healthy}
       rabbitmq: {condition: service_healthy}

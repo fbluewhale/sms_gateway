@@ -173,35 +173,43 @@ type Sender interface {
 }
 
 type Worker struct {
-	db           *gorm.DB
-	conn         *amqp.Connection
-	line         string
-	prefetch     int
-	concurrency  int
-	sender       Sender
-	reservations app.ReservationStore
+	db              *gorm.DB
+	conn            *amqp.Connection
+	line            string
+	prefetch        int
+	concurrency     int
+	sender          Sender
+	reservations    app.ReservationStore
+	providerTimeout time.Duration
 }
 
 func NewWorker(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, sender Sender) (*Worker, error) {
-	return newWorker(db, brokerURL, line, prefetch, concurrency, sender, nil)
+	return newWorker(db, brokerURL, line, prefetch, concurrency, sender, nil, 10*time.Second)
 }
 
 func NewWorkerWithReservation(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, sender Sender, reservations app.ReservationStore) (*Worker, error) {
-	return newWorker(db, brokerURL, line, prefetch, concurrency, sender, reservations)
+	return newWorker(db, brokerURL, line, prefetch, concurrency, sender, reservations, 10*time.Second)
 }
 
-func newWorker(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, sender Sender, reservations app.ReservationStore) (*Worker, error) {
+func NewWorkerWithReservationAndTimeout(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, sender Sender, reservations app.ReservationStore, providerTimeout time.Duration) (*Worker, error) {
+	return newWorker(db, brokerURL, line, prefetch, concurrency, sender, reservations, providerTimeout)
+}
+
+func newWorker(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, sender Sender, reservations app.ReservationStore, providerTimeout time.Duration) (*Worker, error) {
 	if line != "express" && line != "normal" {
 		return nil, fmt.Errorf("invalid worker line %q", line)
 	}
 	if concurrency < 1 || prefetch < concurrency {
 		return nil, fmt.Errorf("prefetch (%d) must be at least concurrency (%d)", prefetch, concurrency)
 	}
+	if providerTimeout <= 0 {
+		return nil, fmt.Errorf("provider timeout must be positive")
+	}
 	conn, err := amqp.Dial(brokerURL)
 	if err != nil {
 		return nil, err
 	}
-	return &Worker{db: db, conn: conn, line: line, prefetch: prefetch, concurrency: concurrency, sender: sender, reservations: reservations}, nil
+	return &Worker{db: db, conn: conn, line: line, prefetch: prefetch, concurrency: concurrency, sender: sender, reservations: reservations, providerTimeout: providerTimeout}, nil
 }
 
 func (w *Worker) Close() error { return w.conn.Close() }
@@ -288,7 +296,9 @@ func (w *Worker) processReserved(ctx context.Context, event app.DeliveryEvent) e
 	if !reserved {
 		return w.markDelivery(ctx, event.MessageID, "refunded", "credit reservation is missing", nil)
 	}
-	if err := w.sender.Send(ctx, event); err != nil {
+	sendCtx, cancel := w.providerContext(ctx, event)
+	defer cancel()
+	if err := w.sender.Send(sendCtx, event); err != nil {
 		if refundErr := w.reservations.Refund(ctx, event.WalletID, event.MessageID); refundErr != nil {
 			return refundErr
 		}
@@ -311,6 +321,23 @@ func (w *Worker) processReserved(ctx context.Context, event app.DeliveryEvent) e
 		return w.markDelivery(ctx, event.MessageID, "refunded", err.Error(), nil)
 	}
 	return w.reservations.Commit(ctx, event.MessageID)
+}
+
+func (w *Worker) providerContext(ctx context.Context, event app.DeliveryEvent) (context.Context, context.CancelFunc) {
+	timeout := w.providerTimeout
+	if timeout <= 0 {
+		timeout = 10 * time.Second
+	}
+	if !event.DeadlineAt.IsZero() {
+		remaining := time.Until(event.DeadlineAt)
+		if remaining < timeout {
+			timeout = remaining
+		}
+	}
+	if timeout <= 0 {
+		return context.WithCancel(ctx)
+	}
+	return context.WithTimeout(ctx, timeout)
 }
 
 func (w *Worker) beginDelivery(ctx context.Context, event app.DeliveryEvent) (bool, error) {

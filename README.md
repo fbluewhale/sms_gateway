@@ -73,6 +73,7 @@ the `X-Admin-API-Key` header.
 | `EXPRESS_SMS_SLA` | `5s` |
 | `EXPRESS_INFLIGHT_LIMIT` | `100` per API replica |
 | `NORMAL_INFLIGHT_LIMIT` | `20` per API replica |
+| `SMS_PROVIDER_TIMEOUT` | `10s` |
 
 Set `APP_ENV=production` in every production deployment. Production startup
 fails unless `DB_PASSWORD` and `ADMIN_API_KEY` are explicitly configured.
@@ -135,6 +136,9 @@ that time. Production capacity must keep accepted Express throughput below
 `replicas * concurrency / provider_latency`, with headroom for failures. Monitor
 the age of the oldest `sms.express` message and scale the Express pool before it
 approaches the configured deadline.
+Provider calls are bounded by `SMS_PROVIDER_TIMEOUT` and, for Express, by the
+remaining time until `deadline_at`, so a stuck provider call cannot consume the
+entire Express worker pool.
 
 Ingress capacity is isolated too. Each API replica reserves independent
 in-flight budgets for Express and Normal requests. When one line exhausts its
