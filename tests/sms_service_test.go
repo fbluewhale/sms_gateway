@@ -182,7 +182,7 @@ func TestSendSMSReturnsAccepted(t *testing.T) {
 	a := &acceptorStub{result: &wallet.Wallet{Balance: wallet.MustMoney(9)}}
 	svc := app.NewService(activeChannel(), a, costStub{1})
 	r := router.Setup(handler.NewSMSHandler(svc, nil), "secret")
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/sms", bytes.NewBufferString(`{"line":"express","dest":"98912","channel":"main"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/sms", bytes.NewBufferString(`{"line":"express","dest":"98912","channel":"main","message":"test message"}`))
 	req.Header.Set("Content-Type", "application/json")
 	response := httptest.NewRecorder()
 	r.ServeHTTP(response, req)
@@ -195,5 +195,5 @@ func activeChannel() channelStub {
 	return channelStub{value: &channel.Channel{WalletID: 1, IsActive: true}}
 }
 func command(line domain.LineType) app.SendSMSCommand {
-	return app.SendSMSCommand{Line: line, Dest: "98912", ChannelName: "main"}
+	return app.SendSMSCommand{Line: line, Dest: "98912", ChannelName: "main", Message: "test message"}
 }

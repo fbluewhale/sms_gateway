@@ -77,7 +77,8 @@ fails unless `DB_PASSWORD` and `ADMIN_API_KEY` are explicitly configured.
 
 ## Routes
 
-- `POST /api/v1/sms` charges the channel wallet, queues the SMS, and returns
+- `POST /api/v1/sms` accepts `line`, `dest`, `channel`, and `message`, charges
+  the channel wallet, queues the SMS, and returns
   `202 Accepted`. Express and normal messages are processed by independent
   workers so one line cannot block the other. If asynchronous delivery fails,
   the charged amount is credited back to the wallet and recorded as a refund

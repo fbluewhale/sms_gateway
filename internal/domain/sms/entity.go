@@ -24,3 +24,7 @@ func (d Destination) String() string {
 func (d Destination) IsValid() bool {
 	return len(d) > 0
 }
+
+func IsMessageValid(message string) bool {
+	return len([]rune(message)) > 0 && len([]rune(message)) <= 1600
+}

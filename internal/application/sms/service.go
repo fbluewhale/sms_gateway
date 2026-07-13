@@ -21,6 +21,7 @@ type SendSMSCommand struct {
 	Line        smsDomain.LineType
 	Dest        smsDomain.Destination
 	ChannelName string
+	Message     string
 }
 
 type SendSMSResult struct {
@@ -33,6 +34,7 @@ type DeliveryEvent struct {
 	MessageID   string                `json:"message_id"`
 	WalletID    int64                 `json:"wallet_id"`
 	Destination smsDomain.Destination `json:"destination"`
+	Message     string                `json:"message"`
 	Line        smsDomain.LineType    `json:"line"`
 	ChannelName string                `json:"channel_name"`
 	CostUnits   int64                 `json:"cost_units"`
@@ -100,6 +102,9 @@ func (s *Service) Execute(ctx context.Context, cmd SendSMSCommand) (*SendSMSResu
 	if !cmd.Dest.IsValid() {
 		return nil, fmt.Errorf("destination is required")
 	}
+	if !smsDomain.IsMessageValid(cmd.Message) {
+		return nil, fmt.Errorf("message is required and must be at most 1600 characters")
+	}
 	if !s.acquire(cmd.Line) {
 		return nil, fmt.Errorf("%w: %s", ErrLineOverloaded, cmd.Line)
 	}
@@ -121,7 +126,7 @@ func (s *Service) Execute(ctx context.Context, cmd SendSMSCommand) (*SendSMSResu
 	}
 	messageID := generateMessageID()
 	now := time.Now().UTC()
-	event := DeliveryEvent{MessageID: messageID, WalletID: ch.WalletID, Destination: cmd.Dest, Line: cmd.Line,
+	event := DeliveryEvent{MessageID: messageID, WalletID: ch.WalletID, Destination: cmd.Dest, Message: cmd.Message, Line: cmd.Line,
 		ChannelName: cmd.ChannelName, CostUnits: cost.Units(), CreatedAt: now}
 	if cmd.Line == smsDomain.LineTypeExpress {
 		event.DeadlineAt = now.Add(s.expressSLA)
