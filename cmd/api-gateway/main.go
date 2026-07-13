@@ -1,3 +1,12 @@
+// @title SMS Gateway API
+// @version 1.0
+// @description Asynchronous SMS gateway with Redis credit reservations and delivery reports.
+// @BasePath /api/v1
+// @securityDefinitions.apikey AdminAPIKey
+// @in header
+// @name X-Admin-API-Key
+//go:generate swag init -g main.go -o ../../docs/swagger --parseInternal
+
 package main
 
 import (

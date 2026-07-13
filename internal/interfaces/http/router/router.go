@@ -2,9 +2,13 @@ package router
 
 import (
 	"crypto/subtle"
-	"github.com/gin-gonic/gin"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "sms_gateway/docs/swagger"
 	"sms_gateway/internal/interfaces/http/handler"
 )
 
@@ -29,6 +33,7 @@ func Setup(h *handler.SMSHandler, adminAPIKey string) *gin.Engine {
 		admin.GET("/channels", h.ListChannels)
 		admin.GET("/sms/:message_id", h.GetSMSReport)
 	}
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return r
 }

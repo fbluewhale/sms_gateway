@@ -26,6 +26,18 @@ func NewSMSHandler(smsService *appDTO.Service, adminService *admin.AdminService)
 	}
 }
 
+// SendSMS godoc
+// @Summary Queue an SMS
+// @Description Reserves credit and queues an asynchronous SMS delivery.
+// @Tags SMS
+// @Accept json
+// @Produce json
+// @Param request body SwaggerSMSRequest true "SMS request"
+// @Success 202 {object} SwaggerSMSResponse
+// @Failure 400 {object} SwaggerErrorResponse
+// @Failure 422 {object} SwaggerErrorResponse
+// @Failure 429 {object} SwaggerErrorResponse
+// @Router /sms [post]
 func (h *SMSHandler) SendSMS(c *gin.Context) {
 	var req appDTO.SendSMSRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -46,6 +58,15 @@ func (h *SMSHandler) SendSMS(c *gin.Context) {
 	c.JSON(http.StatusAccepted, appDTO.ToResponse(req, result))
 }
 
+// CreateWallet godoc
+// @Summary Create a wallet
+// @Tags Wallets
+// @Accept json
+// @Produce json
+// @Security AdminAPIKey
+// @Param request body admin.CreateWalletRequest true "Wallet request"
+// @Success 201 {object} admin.WalletResponse
+// @Router /wallets [post]
 func (h *SMSHandler) CreateWallet(c *gin.Context) {
 	var req admin.CreateWalletRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -61,6 +82,14 @@ func (h *SMSHandler) CreateWallet(c *gin.Context) {
 	c.JSON(http.StatusCreated, admin.ToWalletResponse(w))
 }
 
+// GetWallet godoc
+// @Summary Get a wallet balance
+// @Tags Wallets
+// @Produce json
+// @Security AdminAPIKey
+// @Param id path int true "Wallet ID"
+// @Success 200 {object} admin.WalletResponse
+// @Router /wallets/{id} [get]
 func (h *SMSHandler) GetWallet(c *gin.Context) {
 	id, ok := parseIDParam(c, "id")
 	if !ok {
@@ -75,6 +104,16 @@ func (h *SMSHandler) GetWallet(c *gin.Context) {
 	c.JSON(http.StatusOK, admin.ToWalletResponse(w))
 }
 
+// TopUpWallet godoc
+// @Summary Top up a wallet
+// @Tags Wallets
+// @Accept json
+// @Produce json
+// @Security AdminAPIKey
+// @Param id path int true "Wallet ID"
+// @Param request body admin.TopUpWalletRequest true "Top-up request"
+// @Success 200 {object} admin.WalletResponse
+// @Router /wallets/{id}/topup [post]
 func (h *SMSHandler) TopUpWallet(c *gin.Context) {
 	id, ok := parseIDParam(c, "id")
 	if !ok {
@@ -95,6 +134,15 @@ func (h *SMSHandler) TopUpWallet(c *gin.Context) {
 	c.JSON(http.StatusOK, admin.ToWalletResponse(w))
 }
 
+// CreateChannel godoc
+// @Summary Create an SMS channel
+// @Tags Channels
+// @Accept json
+// @Produce json
+// @Security AdminAPIKey
+// @Param request body admin.CreateChannelRequest true "Channel request"
+// @Success 201 {object} admin.ChannelResponse
+// @Router /channels [post]
 func (h *SMSHandler) CreateChannel(c *gin.Context) {
 	var req admin.CreateChannelRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -110,6 +158,13 @@ func (h *SMSHandler) CreateChannel(c *gin.Context) {
 	c.JSON(http.StatusCreated, admin.ToChannelResponse(*ch))
 }
 
+// ListChannels godoc
+// @Summary List SMS channels
+// @Tags Channels
+// @Produce json
+// @Security AdminAPIKey
+// @Success 200 {array} admin.ChannelResponse
+// @Router /channels [get]
 func (h *SMSHandler) ListChannels(c *gin.Context) {
 	channels, err := h.adminService.ListChannels(c.Request.Context())
 	if err != nil {
@@ -123,6 +178,14 @@ func (h *SMSHandler) ListChannels(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// GetWalletTransactions godoc
+// @Summary List wallet transactions
+// @Tags Wallets
+// @Produce json
+// @Security AdminAPIKey
+// @Param id path int true "Wallet ID"
+// @Success 200 {array} admin.TransactionResponse
+// @Router /wallets/{id}/transactions [get]
 func (h *SMSHandler) GetWalletTransactions(c *gin.Context) {
 	id, ok := parseIDParam(c, "id")
 	if !ok {
@@ -142,6 +205,15 @@ func (h *SMSHandler) GetWalletTransactions(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// ListSMSReports godoc
+// @Summary List SMS delivery reports for a wallet
+// @Tags SMS Reports
+// @Produce json
+// @Security AdminAPIKey
+// @Param id path int true "Wallet ID"
+// @Param limit query int false "Maximum reports (1-500)" default(100)
+// @Success 200 {array} SwaggerDeliveryReport
+// @Router /wallets/{id}/sms [get]
 func (h *SMSHandler) ListSMSReports(c *gin.Context) {
 	id, ok := parseIDParam(c, "id")
 	if !ok {
@@ -165,6 +237,14 @@ func (h *SMSHandler) ListSMSReports(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// GetSMSReport godoc
+// @Summary Get an SMS delivery report
+// @Tags SMS Reports
+// @Produce json
+// @Security AdminAPIKey
+// @Param message_id path string true "SMS message ID"
+// @Success 200 {object} SwaggerDeliveryReport
+// @Router /sms/{message_id} [get]
 func (h *SMSHandler) GetSMSReport(c *gin.Context) {
 	messageID := strings.TrimSpace(c.Param("message_id"))
 	if messageID == "" {

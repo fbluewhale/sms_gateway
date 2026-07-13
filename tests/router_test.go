@@ -30,3 +30,14 @@ func TestSMSReportRoutesRequireAPIKey(t *testing.T) {
 		}
 	}
 }
+
+func TestSwaggerUIIsPublic(t *testing.T) {
+	r := router.Setup(&handler.SMSHandler{}, "secret")
+	req := httptest.NewRequest(http.MethodGet, "/swagger/index.html", nil)
+	resp := httptest.NewRecorder()
+	r.ServeHTTP(resp, req)
+
+	if resp.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d", resp.Code, http.StatusOK)
+	}
+}

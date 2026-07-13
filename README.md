@@ -6,6 +6,13 @@ See [docs/architecture.md](docs/architecture.md) for package boundaries,
 failure semantics, SLA behavior, and editable Draw.io diagrams. Each major
 source tree also has a local README describing its responsibility.
 
+## API documentation
+
+After startup, Swagger UI is available at `http://localhost:8080/swagger/index.html`.
+The generated OpenAPI files are committed under `docs/swagger`. Regenerate them
+after API changes with `make swagger` (or `go generate ./cmd/api-gateway` after
+installing `swag` with `go install github.com/swaggo/swag/cmd/swag@v1.16.4`).
+
 ## Docker Compose
 
 Start the API and PostgreSQL together:
