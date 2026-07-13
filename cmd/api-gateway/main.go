@@ -14,6 +14,7 @@ import (
 	smsApp "sms_gateway/internal/application/sms"
 	"sms_gateway/internal/config"
 	"sms_gateway/internal/infrastructure/persistence"
+	"sms_gateway/internal/infrastructure/reservation"
 	"sms_gateway/internal/interfaces/http/handler"
 	"sms_gateway/internal/interfaces/http/router"
 )
@@ -50,10 +51,19 @@ func run() error {
 	}
 
 	channelRepo := persistence.NewPostgresChannelRepository(db)
-	walletRepo := persistence.NewPostgresWalletRepository(db)
+	baseWalletRepo := persistence.NewPostgresWalletRepository(db)
+	reservations, err := reservation.NewStore(cfg.RedisURL, baseWalletRepo)
+	if err != nil {
+		return fmt.Errorf("create Redis reservation store: %w", err)
+	}
+	defer reservations.Close()
+	if err := reservations.Ping(ctx); err != nil {
+		return fmt.Errorf("connect Redis: %w", err)
+	}
+	walletRepo := persistence.NewPostgresWalletRepositoryWithCache(db, reservations)
 	smsCostRepo := persistence.NewPostgresSMSCostRepository(db)
 
-	smsService := smsApp.NewServiceWithPolicy(channelRepo, walletRepo, smsCostRepo, cfg.ExpressSLA, cfg.ExpressInFlight, cfg.NormalInFlight)
+	smsService := smsApp.NewServiceWithReservation(channelRepo, walletRepo, smsCostRepo, reservations, cfg.ExpressSLA, cfg.ExpressInFlight, cfg.NormalInFlight)
 	adminService := admin.NewAdminService(walletRepo, channelRepo)
 
 	h := handler.NewSMSHandler(smsService, adminService)

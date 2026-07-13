@@ -44,6 +44,30 @@ type isolatingAcceptor struct {
 	release chan struct{}
 }
 
+type reservationStub struct {
+	reserved  bool
+	committed bool
+	refunded  bool
+}
+
+func (r *reservationStub) Reserve(context.Context, int64, int64, string) (int64, error) {
+	r.reserved = true
+	return 76500, nil
+}
+func (r *reservationStub) IsReserved(context.Context, string) (bool, error) { return r.reserved, nil }
+func (r *reservationStub) Commit(context.Context, string) error             { r.committed = true; return nil }
+func (r *reservationStub) Refund(context.Context, int64, string) error      { r.refunded = true; return nil }
+
+type enqueueStub struct {
+	called bool
+	err    error
+}
+
+func (e *enqueueStub) Enqueue(context.Context, app.DeliveryEvent, string) error {
+	e.called = true
+	return e.err
+}
+
 func (a *isolatingAcceptor) DeductAndEnqueue(ctx context.Context, _ int64, _ wallet.Money, event app.DeliveryEvent, _ string) (*wallet.Wallet, error) {
 	if event.Line == domain.LineTypeExpress {
 		close(a.entered)
@@ -99,6 +123,28 @@ func TestExecuteUsesConfiguredExpressSLA(t *testing.T) {
 	}
 	if got := a.event.DeadlineAt.Sub(a.event.CreatedAt); got != 750*time.Millisecond {
 		t.Fatalf("deadline = %s", got)
+	}
+}
+
+func TestReservationHappensBeforeEnqueue(t *testing.T) {
+	reservation := &reservationStub{}
+	enqueuer := &enqueueStub{}
+	svc := app.NewServiceWithReservation(activeChannel(), enqueuer, costStub{1}, reservation, time.Second, 1, 1)
+	result, err := svc.Execute(context.Background(), command(domain.LineTypeNormal))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !reservation.reserved || !enqueuer.called || result.RemainingBal != 7.65 {
+		t.Fatalf("reservation=%+v enqueue=%+v result=%+v", reservation, enqueuer, result)
+	}
+}
+
+func TestFailedEnqueueRefundsReservation(t *testing.T) {
+	reservation := &reservationStub{}
+	enqueuer := &enqueueStub{err: errors.New("outbox unavailable")}
+	svc := app.NewServiceWithReservation(activeChannel(), enqueuer, costStub{1}, reservation, time.Second, 1, 1)
+	if _, err := svc.Execute(context.Background(), command(domain.LineTypeNormal)); err == nil || !reservation.refunded {
+		t.Fatalf("err=%v reservation=%+v", err, reservation)
 	}
 }
 

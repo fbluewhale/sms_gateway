@@ -30,8 +30,10 @@ The running API reaches the same proxy through Docker's host gateway. Override
 Stop the stack with `docker compose -f deployments/docker/compose.yaml down`. Add
 `--volumes` only when you also want to delete the PostgreSQL data volume.
 
-The stack also runs RabbitMQ, one transactional-outbox dispatcher, three
-express workers, and two normal workers. Scale the independently routed worker
+The stack also runs Redis, RabbitMQ, one transactional-outbox dispatcher, three
+express workers, and two normal workers. Redis performs atomic credit
+reservations; PostgreSQL remains the source of truth for committed debits.
+Scale the independently routed worker
 pools without changing the API:
 
 ```sh
@@ -65,6 +67,7 @@ the `X-Admin-API-Key` header.
 | `DB_PASSWORD` | `postgres` locally, required in production |
 | `ADMIN_API_KEY` | `local-admin-key` locally, required in production |
 | `BROKER_URL` | `amqp://guest:guest@localhost:5672/` |
+| `REDIS_URL` | `redis://localhost:6379/0` |
 | `EXPRESS_SMS_SLA` | `5s` |
 | `EXPRESS_INFLIGHT_LIMIT` | `100` per API replica |
 | `NORMAL_INFLIGHT_LIMIT` | `20` per API replica |
@@ -108,6 +111,15 @@ provider requires provider cooperation. A production sender must pass
 produce one provider-side effect; without it, the infrastructure guarantees
 at-least-once attempts with application-side deduplication. Failed deliveries
 are refunded atomically with their terminal delivery record.
+
+For production SMS acceptance, credit follows `Reserve -> Send -> Commit/Refund`:
+Redis executes the reservation with a Lua script (`DECRBY` plus reservation key)
+as one atomic operation. Insufficient credit is rejected before the outbox write
+and without a database wallet lock. A successful provider result commits the
+debit to PostgreSQL and removes the Redis reservation; a failed result returns
+the reservation to Redis and records the terminal delivery state. Redis is a
+performance projection, not the financial source of truth; PostgreSQL still
+protects the final debit from stale-cache overdraw.
 
 Express events carry an absolute deadline calculated from `EXPRESS_SMS_SLA`.
 Workers never start a provider attempt after that deadline; an expired request

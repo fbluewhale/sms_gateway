@@ -1,6 +1,6 @@
 # Deployments
 
-`compose.yaml` runs PostgreSQL, RabbitMQ, the API, one outbox dispatcher, and
+`compose.yaml` runs PostgreSQL, Redis, RabbitMQ, the API, one outbox dispatcher, and
 independently scalable Express and Normal worker pools. The Docker build uses
 the host proxy default `http://127.0.0.1:10808`.
 

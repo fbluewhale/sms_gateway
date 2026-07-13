@@ -12,6 +12,7 @@ type Config struct {
 	DB              DatabaseConfig
 	AdminAPIKey     string
 	BrokerURL       string
+	RedisURL        string
 	ExpressSLA      time.Duration
 	ExpressInFlight int
 	NormalInFlight  int
@@ -69,6 +70,7 @@ func Load() (*Config, error) {
 		},
 		AdminAPIKey: getEnv("ADMIN_API_KEY", defaultAdminAPIKey),
 		BrokerURL:   getEnv("BROKER_URL", "amqp://guest:guest@localhost:5672/"),
+		RedisURL:    getEnv("REDIS_URL", "redis://localhost:6379/0"),
 	}
 	expressSLA, err := time.ParseDuration(getEnv("EXPRESS_SMS_SLA", "5s"))
 	if err != nil || expressSLA <= 0 {

@@ -129,15 +129,24 @@ type Sender interface {
 }
 
 type Worker struct {
-	db          *gorm.DB
-	conn        *amqp.Connection
-	line        string
-	prefetch    int
-	concurrency int
-	sender      Sender
+	db           *gorm.DB
+	conn         *amqp.Connection
+	line         string
+	prefetch     int
+	concurrency  int
+	sender       Sender
+	reservations app.ReservationStore
 }
 
 func NewWorker(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, sender Sender) (*Worker, error) {
+	return newWorker(db, brokerURL, line, prefetch, concurrency, sender, nil)
+}
+
+func NewWorkerWithReservation(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, sender Sender, reservations app.ReservationStore) (*Worker, error) {
+	return newWorker(db, brokerURL, line, prefetch, concurrency, sender, reservations)
+}
+
+func newWorker(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, sender Sender, reservations app.ReservationStore) (*Worker, error) {
 	if line != "express" && line != "normal" {
 		return nil, fmt.Errorf("invalid worker line %q", line)
 	}
@@ -148,7 +157,7 @@ func NewWorker(db *gorm.DB, brokerURL, line string, prefetch, concurrency int, s
 	if err != nil {
 		return nil, err
 	}
-	return &Worker{db: db, conn: conn, line: line, prefetch: prefetch, concurrency: concurrency, sender: sender}, nil
+	return &Worker{db: db, conn: conn, line: line, prefetch: prefetch, concurrency: concurrency, sender: sender, reservations: reservations}, nil
 }
 
 func (w *Worker) Close() error { return w.conn.Close() }
@@ -208,6 +217,89 @@ func (w *Worker) process(ctx context.Context, body []byte) error {
 	if err := json.Unmarshal(body, &event); err != nil {
 		return fmt.Errorf("decode event: %w", err)
 	}
+	if w.reservations == nil {
+		return w.processLegacy(ctx, event)
+	}
+	return w.processReserved(ctx, event)
+}
+
+func (w *Worker) processReserved(ctx context.Context, event app.DeliveryEvent) error {
+	terminal, err := w.beginDelivery(ctx, event)
+	if err != nil || terminal {
+		if terminal {
+			return w.reservations.Commit(ctx, event.MessageID)
+		}
+		return err
+	}
+	if !event.DeadlineAt.IsZero() && time.Now().UTC().After(event.DeadlineAt) {
+		if err := w.reservations.Refund(ctx, event.WalletID, event.MessageID); err != nil {
+			return err
+		}
+		return w.markDelivery(ctx, event.MessageID, "refunded", "express SMS SLA expired before provider attempt", nil)
+	}
+	reserved, err := w.reservations.IsReserved(ctx, event.MessageID)
+	if err != nil {
+		return err
+	}
+	if !reserved {
+		return w.markDelivery(ctx, event.MessageID, "refunded", "credit reservation is missing", nil)
+	}
+	if err := w.sender.Send(ctx, event); err != nil {
+		if refundErr := w.reservations.Refund(ctx, event.WalletID, event.MessageID); refundErr != nil {
+			return refundErr
+		}
+		return w.markDelivery(ctx, event.MessageID, "refunded", err.Error(), nil)
+	}
+	if err := w.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		repo := persistence.NewPostgresWalletRepository(tx)
+		amount, err := wallet.MoneyFromUnits(event.CostUnits)
+		if err != nil {
+			return fmt.Errorf("invalid reserved amount: %w", err)
+		}
+		if _, err := repo.DeductAndRecord(ctx, event.WalletID, amount, event.MessageID, "SMS delivery"); err != nil {
+			return err
+		}
+		return tx.Model(&persistence.SMSDeliveryModel{}).Where("message_id = ?", event.MessageID).Updates(map[string]any{"status": "delivered", "delivered_at": time.Now().UTC(), "attempts": gorm.Expr("attempts + 1")}).Error
+	}); err != nil {
+		if refundErr := w.reservations.Refund(ctx, event.WalletID, event.MessageID); refundErr != nil {
+			return fmt.Errorf("commit debit: %w; refund reservation: %v", err, refundErr)
+		}
+		return w.markDelivery(ctx, event.MessageID, "refunded", err.Error(), nil)
+	}
+	return w.reservations.Commit(ctx, event.MessageID)
+}
+
+func (w *Worker) beginDelivery(ctx context.Context, event app.DeliveryEvent) (bool, error) {
+	var terminal bool
+	err := w.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		var record persistence.SMSDeliveryModel
+		err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).First(&record, "message_id = ?", event.MessageID).Error
+		if err == gorm.ErrRecordNotFound {
+			record = persistence.SMSDeliveryModel{MessageID: event.MessageID, Status: "processing"}
+			if err := tx.Create(&record).Error; err != nil {
+				return err
+			}
+		} else if err != nil {
+			return err
+		}
+		if record.Status == "delivered" || record.Status == "refunded" {
+			terminal = true
+			return nil
+		}
+		return nil
+	})
+	return terminal, err
+}
+
+func (w *Worker) markDelivery(ctx context.Context, messageID, status, lastError string, deliveredAt *time.Time) error {
+	updates := map[string]any{"status": status, "last_error": lastError, "attempts": gorm.Expr("attempts + 1")}
+	if deliveredAt != nil {
+		updates["delivered_at"] = deliveredAt
+	}
+	return w.db.WithContext(ctx).Model(&persistence.SMSDeliveryModel{}).Where("message_id = ?", messageID).Updates(updates).Error
+}
+
+func (w *Worker) processLegacy(ctx context.Context, event app.DeliveryEvent) error {
 	return w.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		var record persistence.SMSDeliveryModel
 		err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).First(&record, "message_id = ?", event.MessageID).Error
@@ -228,8 +320,7 @@ func (w *Worker) process(ctx context.Context, body []byte) error {
 		if err := w.sender.Send(ctx, event); err != nil {
 			return w.refund(tx, ctx, &record, event, err.Error())
 		}
-		now := time.Now().UTC()
-		return tx.Model(&record).Updates(map[string]any{"status": "delivered", "delivered_at": now, "attempts": gorm.Expr("attempts + 1")}).Error
+		return tx.Model(&record).Updates(map[string]any{"status": "delivered", "delivered_at": time.Now().UTC(), "attempts": gorm.Expr("attempts + 1")}).Error
 	})
 }
 

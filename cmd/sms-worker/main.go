@@ -11,6 +11,7 @@ import (
 	"sms_gateway/internal/config"
 	"sms_gateway/internal/infrastructure/messaging"
 	"sms_gateway/internal/infrastructure/persistence"
+	"sms_gateway/internal/infrastructure/reservation"
 	smsInfra "sms_gateway/internal/infrastructure/sms"
 )
 
@@ -32,7 +33,18 @@ func main() {
 		logger.Error("connect database", "error", err)
 		os.Exit(1)
 	}
-	worker, err := messaging.NewWorker(db, cfg.BrokerURL, *line, *prefetch, *concurrency, smsInfra.NewMockSender(logger))
+	baseWalletRepo := persistence.NewPostgresWalletRepository(db)
+	reservations, err := reservation.NewStore(cfg.RedisURL, baseWalletRepo)
+	if err != nil {
+		logger.Error("create Redis reservation store", "error", err)
+		os.Exit(1)
+	}
+	defer reservations.Close()
+	if err := reservations.Ping(ctx); err != nil {
+		logger.Error("connect Redis", "error", err)
+		os.Exit(1)
+	}
+	worker, err := messaging.NewWorkerWithReservation(db, cfg.BrokerURL, *line, *prefetch, *concurrency, smsInfra.NewMockSender(logger), reservations)
 	if err != nil {
 		logger.Error("create worker", "error", err)
 		os.Exit(1)

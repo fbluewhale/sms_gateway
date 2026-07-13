@@ -9,6 +9,7 @@ interfaces:
 ```text
 HTTP router/handler -> application services -> domain rules
                                   |
+                                  +-> Redis atomic reservation
                                   +-> persistence repositories
                                   +-> transactional outbox
 
@@ -18,11 +19,14 @@ outbox dispatcher -> RabbitMQ exchange -> dedicated Express/Normal queues
                                               +-> Normal worker pool -> SMS provider
 ```
 
-The API process accepts and charges an SMS request in one PostgreSQL
-transaction. That transaction writes the wallet debit, ledger row, and outbox
-event. The dispatcher publishes the event with publisher confirms. Workers use
-manual acknowledgements and `sms_deliveries.message_id` as an inbox/deduplication
-key.
+The API process first reserves credit in Redis with a Lua script. The reservation
+and its remaining balance are returned without taking a PostgreSQL wallet lock.
+The event is then written to the transactional outbox. After provider success,
+the worker commits the debit and ledger row in PostgreSQL, then removes the
+reservation. On failure it refunds the Redis reservation. PostgreSQL remains the
+financial source of truth and rejects any stale-cache overdraw at commit time.
+Workers use manual acknowledgements and `sms_deliveries.message_id` as an
+inbox/deduplication key.
 
 ## Channel isolation and SLA
 

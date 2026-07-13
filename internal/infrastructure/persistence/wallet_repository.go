@@ -13,7 +13,12 @@ import (
 )
 
 type PostgresWalletRepository struct {
-	db *gorm.DB
+	db    *gorm.DB
+	cache BalanceCache
+}
+
+type BalanceCache interface {
+	SetAvailable(context.Context, int64, int64) error
 }
 
 func (r *PostgresWalletRepository) DeductAndEnqueue(ctx context.Context, walletID int64, amount wallet.Money, event app.DeliveryEvent, desc string) (*wallet.Wallet, error) {
@@ -44,11 +49,29 @@ func (r *PostgresWalletRepository) DeductAndEnqueue(ctx context.Context, walletI
 		result = w
 		return nil
 	})
+	if err == nil && r.cache != nil && result != nil {
+		_ = r.cache.SetAvailable(ctx, walletID, result.Balance.Units())
+	}
 	return result, err
+}
+
+func (r *PostgresWalletRepository) Enqueue(ctx context.Context, event app.DeliveryEvent, desc string) error {
+	payload, err := json.Marshal(event)
+	if err != nil {
+		return fmt.Errorf("marshal SMS event: %w", err)
+	}
+	if err := r.db.WithContext(ctx).Create(&SMSOutboxModel{MessageID: event.MessageID, RoutingKey: string(event.Line), Payload: payload}).Error; err != nil {
+		return fmt.Errorf("record SMS outbox: %w", err)
+	}
+	return nil
 }
 
 func NewPostgresWalletRepository(db *gorm.DB) *PostgresWalletRepository {
 	return &PostgresWalletRepository{db: db}
+}
+
+func NewPostgresWalletRepositoryWithCache(db *gorm.DB, cache BalanceCache) *PostgresWalletRepository {
+	return &PostgresWalletRepository{db: db, cache: cache}
 }
 
 func (r *PostgresWalletRepository) GetByID(ctx context.Context, id int64) (*wallet.Wallet, error) {
@@ -69,6 +92,9 @@ func (r *PostgresWalletRepository) Create(ctx context.Context, w *wallet.Wallet)
 	w.ID = model.ID
 	w.CreatedAt = model.CreatedAt
 	w.UpdatedAt = model.UpdatedAt
+	if r.cache != nil {
+		_ = r.cache.SetAvailable(ctx, w.ID, w.Balance.Units())
+	}
 	return nil
 }
 
@@ -121,7 +147,9 @@ func (r *PostgresWalletRepository) mutateAndRecord(ctx context.Context, walletID
 		result = w
 		return nil
 	})
-
+	if err == nil && r.cache != nil && result != nil {
+		_ = r.cache.SetAvailable(ctx, walletID, result.Balance.Units())
+	}
 	return result, err
 }
 

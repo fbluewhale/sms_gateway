@@ -12,7 +12,10 @@ import (
 	"sms_gateway/internal/domain/wallet"
 )
 
-var ErrLineOverloaded = errors.New("SMS line is at capacity")
+var (
+	ErrLineOverloaded     = errors.New("SMS line is at capacity")
+	ErrInsufficientCredit = errors.New("insufficient wallet credit")
+)
 
 type SendSMSCommand struct {
 	Line        smsDomain.LineType
@@ -37,6 +40,15 @@ type DeliveryEvent struct {
 	DeadlineAt  time.Time             `json:"deadline_at,omitempty"`
 }
 
+// ReservationStore owns the fast, atomic credit reservation. PostgreSQL remains
+// the source of truth and is updated only after the provider result is known.
+type ReservationStore interface {
+	Reserve(context.Context, int64, int64, string) (int64, error)
+	IsReserved(context.Context, string) (bool, error)
+	Commit(context.Context, string) error
+	Refund(context.Context, int64, string) error
+}
+
 type ChannelFinder interface {
 	GetByName(ctx context.Context, name string) (*channel.Channel, error)
 }
@@ -45,17 +57,22 @@ type SMSAcceptor interface {
 	DeductAndEnqueue(ctx context.Context, walletID int64, amount wallet.Money, event DeliveryEvent, desc string) (*wallet.Wallet, error)
 }
 
+type SMSEnqueuer interface {
+	Enqueue(ctx context.Context, event DeliveryEvent, desc string) error
+}
+
 type SMSCostFinder interface {
 	GetByLineType(ctx context.Context, lineType smsDomain.LineType) (*smsDomain.SMSCost, error)
 }
 
 type Service struct {
 	channelRepo  ChannelFinder
-	acceptor     SMSAcceptor
+	acceptor     any
 	costRepo     SMSCostFinder
 	expressSLA   time.Duration
 	expressSlots chan struct{}
 	normalSlots  chan struct{}
+	reservations ReservationStore
 }
 
 func NewService(channelRepo ChannelFinder, acceptor SMSAcceptor, costRepo SMSCostFinder) *Service {
@@ -69,6 +86,11 @@ func NewServiceWithExpressSLA(channelRepo ChannelFinder, acceptor SMSAcceptor, c
 func NewServiceWithPolicy(channelRepo ChannelFinder, acceptor SMSAcceptor, costRepo SMSCostFinder, expressSLA time.Duration, expressLimit, normalLimit int) *Service {
 	return &Service{channelRepo: channelRepo, acceptor: acceptor, costRepo: costRepo, expressSLA: expressSLA,
 		expressSlots: make(chan struct{}, expressLimit), normalSlots: make(chan struct{}, normalLimit)}
+}
+
+func NewServiceWithReservation(channelRepo ChannelFinder, acceptor SMSEnqueuer, costRepo SMSCostFinder, reservations ReservationStore, expressSLA time.Duration, expressLimit, normalLimit int) *Service {
+	return &Service{channelRepo: channelRepo, acceptor: acceptor, costRepo: costRepo, reservations: reservations,
+		expressSLA: expressSLA, expressSlots: make(chan struct{}, expressLimit), normalSlots: make(chan struct{}, normalLimit)}
 }
 
 func (s *Service) Execute(ctx context.Context, cmd SendSMSCommand) (*SendSMSResult, error) {
@@ -104,8 +126,28 @@ func (s *Service) Execute(ctx context.Context, cmd SendSMSCommand) (*SendSMSResu
 	if cmd.Line == smsDomain.LineTypeExpress {
 		event.DeadlineAt = now.Add(s.expressSLA)
 	}
-	w, err := s.acceptor.DeductAndEnqueue(ctx, ch.WalletID, cost, event,
-		fmt.Sprintf("SMS via %s (%s) to %s", cmd.ChannelName, cmd.Line, cmd.Dest))
+	description := fmt.Sprintf("SMS via %s (%s) to %s", cmd.ChannelName, cmd.Line, cmd.Dest)
+	if s.reservations != nil {
+		remaining, err := s.reservations.Reserve(ctx, ch.WalletID, cost.Units(), messageID)
+		if err != nil {
+			return nil, fmt.Errorf("reserve SMS credit: %w", err)
+		}
+		enqueuer, ok := s.acceptor.(SMSEnqueuer)
+		if !ok {
+			_ = s.reservations.Refund(context.Background(), ch.WalletID, messageID)
+			return nil, errors.New("SMS acceptor does not support reservation enqueue")
+		}
+		if err := enqueuer.Enqueue(ctx, event, description); err != nil {
+			_ = s.reservations.Refund(context.Background(), ch.WalletID, messageID)
+			return nil, fmt.Errorf("enqueue SMS: %w", err)
+		}
+		return &SendSMSResult{MessageID: messageID, Cost: cost.Float64(), RemainingBal: float64(remaining) / 10000}, nil
+	}
+	legacy, ok := s.acceptor.(SMSAcceptor)
+	if !ok {
+		return nil, errors.New("SMS acceptor does not support legacy enqueue")
+	}
+	w, err := legacy.DeductAndEnqueue(ctx, ch.WalletID, cost, event, description)
 	if err != nil {
 		return nil, fmt.Errorf("accept SMS: %w", err)
 	}

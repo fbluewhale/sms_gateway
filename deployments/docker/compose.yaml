@@ -33,6 +33,17 @@ services:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
   api:
     build:
       context: ../..
@@ -53,6 +64,7 @@ services:
       DB_SSLMODE: disable
       ADMIN_API_KEY: ${ADMIN_API_KEY:-local-admin-key}
       BROKER_URL: amqp://${RABBITMQ_USER:-sms}:${RABBITMQ_PASSWORD:-sms}@rabbitmq:5672/
+      REDIS_URL: redis://redis:6379/0
       EXPRESS_SMS_SLA: ${EXPRESS_SMS_SLA:-5s}
       EXPRESS_INFLIGHT_LIMIT: ${EXPRESS_INFLIGHT_LIMIT:-100}
       NORMAL_INFLIGHT_LIMIT: ${NORMAL_INFLIGHT_LIMIT:-20}
@@ -65,6 +77,8 @@ services:
       postgres:
         condition: service_healthy
       rabbitmq:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     ports:
       - "${APP_PORT:-8080}:8080"
@@ -85,9 +99,11 @@ services:
       DB_SSLMODE: disable
       ADMIN_API_KEY: ${ADMIN_API_KEY:-local-admin-key}
       BROKER_URL: amqp://${RABBITMQ_USER:-sms}:${RABBITMQ_PASSWORD:-sms}@rabbitmq:5672/
+      REDIS_URL: redis://redis:6379/0
     depends_on: &worker-dependencies
       postgres: {condition: service_healthy}
       rabbitmq: {condition: service_healthy}
+      redis: {condition: service_healthy}
     restart: unless-stopped
 
   express-worker:
@@ -113,3 +129,4 @@ services:
 volumes:
   postgres-data:
   rabbitmq-data:
+  redis-data:
