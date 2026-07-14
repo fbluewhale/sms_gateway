@@ -43,13 +43,15 @@ attempt after that deadline and refunds the charge atomically. This is a
 processing deadline for accepted requests. End-to-end handset delivery still
 depends on provider availability and provider-side idempotency.
 
-Each worker process owns a round-robin pool of three distinct mock providers.
-Every provider is protected by an independent circuit breaker with closed,
-open, and half-open states. Open providers are skipped before a send attempt;
-after the configurable cooldown, one half-open probe determines whether that
-provider returns to service. A failed attempted send is not retried through a
-second provider because doing so would weaken the exactly-once delivery
-contract when a provider response is ambiguous.
+All worker processes use the same Redis-backed round-robin cursor for three
+distinct mock providers. Redis also holds one shared circuit per provider with
+closed, open, and half-open states, so replicas cannot independently overload a
+provider that is already known to be unhealthy. Open providers are skipped
+before a send attempt; after the configurable cooldown, an atomic Lua
+transition permits one cluster-wide half-open probe. The probe has a lease so a
+crashed worker cannot leave the circuit stuck. A failed attempted send is not
+retried through a second provider because doing so would weaken the exactly-once
+delivery contract when a provider response is ambiguous.
 
 ## Failure and retry behavior
 

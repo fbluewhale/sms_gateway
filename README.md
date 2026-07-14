@@ -150,12 +150,16 @@ remaining time until `deadline_at`, so a stuck provider call cannot consume the
 entire Express worker pool.
 
 Workers distribute requests round-robin across three distinct local mock
-providers. Each provider has its own concurrency-safe circuit breaker. After
+providers. Redis stores the shared round-robin cursor and the circuit state for
+each provider, so all Express and Normal worker replicas make decisions from
+the same pool state. After
 `SMS_PROVIDER_CIRCUIT_FAILURE_THRESHOLD` consecutive failures, that provider is
 skipped until `SMS_PROVIDER_CIRCUIT_COOLDOWN` elapses. One request is then
 allowed through in the half-open state; success closes the circuit and failure
-reopens it. A provider that actually attempts a send is never automatically
-retried through another provider, preserving the exactly-once provider contract.
+reopens it. Half-open probes have a Redis lease bounded by
+`SMS_PROVIDER_TIMEOUT`, preventing a crashed worker from leaving the circuit
+stuck. A provider that actually attempts a send is never automatically retried
+through another provider, preserving the exactly-once provider contract.
 
 Ingress capacity is isolated too. Each API replica reserves independent
 in-flight budgets for Express and Normal requests. When one line exhausts its

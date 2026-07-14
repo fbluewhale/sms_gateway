@@ -44,11 +44,12 @@ func main() {
 		logger.Error("connect Redis", "error", err)
 		os.Exit(1)
 	}
-	sender, err := smsInfra.NewDefaultMockRoundRobinSender(logger, cfg.ProviderCircuitFailureThreshold, cfg.ProviderCircuitCooldown)
+	sender, err := smsInfra.NewDefaultRedisMockRoundRobinSender(ctx, cfg.RedisURL, logger, cfg.ProviderCircuitFailureThreshold, cfg.ProviderCircuitCooldown, cfg.ProviderTimeout)
 	if err != nil {
 		logger.Error("create SMS provider pool", "error", err)
 		os.Exit(1)
 	}
+	defer sender.Close()
 	worker, err := messaging.NewWorkerWithReservationAndTimeout(db, cfg.BrokerURL, *line, *prefetch, *concurrency, sender, reservations, cfg.ProviderTimeout)
 	if err != nil {
 		logger.Error("create worker", "error", err)
