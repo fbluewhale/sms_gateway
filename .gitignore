@@ -10,6 +10,9 @@
 coverage.out
 *.coverprofile
 
+# Graphify runtime state
+graphify-out/.rebuild.lock
+
 # Local environment files
 .env
 .env.*
